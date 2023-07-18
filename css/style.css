@@ -1,0 +1,80 @@
+/* mulish-regular - cyrillic_latin */
+@font-face {
+      font-display: swap; /*  пока загружается этот  шрифт, будет подгружен запасной шрифт */
+      font-family: 'Mulish';
+      font-style: normal;
+      font-weight: 400;
+      src: url('../fonts/mulish-v12-cyrillic_latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+
+/* mulish-600 - cyrillic_latin */
+@font-face {
+      font-display: swap; /**/
+      font-family: 'Mulish';
+      font-style: normal;
+      font-weight: 600;
+      src: url('../fonts/mulish-v12-cyrillic_latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+
+/* mulish-900 - cyrillic_latin */
+@font-face {
+      font-display: swap; /**/
+      font-family: 'Mulish';
+      font-style: normal;
+      font-weight: 900;
+      src: url('../fonts/mulish-v12-cyrillic_latin-900.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+
+html{
+      box-sizing: border-box;
+}
+
+
+* , *::after, *::before{
+      box-sizing: inherit;
+}
+
+
+body{
+      min-width: 320px;
+      min-height: 100vh;  /* высота экрана */
+      font-family: 'Mulish', sans-serif;  /* sans-serif запасной шрифт*/
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.1;  /* в % не указывам */
+      color: #000;
+      background-color: #F8E8E2;
+      background-image: url("/img/bg.svg");
+      background-repeat: no-repeat;
+      background-position: top;
+      background-size: contain;  /* чтобы занимал всю ширину экрана */ 
+}
+
+
+button{
+      padding: 0;   
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+}
+
+
+a{
+      text-decoration: none;
+      color: inherit;
+}
+
+
+ul{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+}
+
+
+h1, h2, h3, p, fieldset{
+      margin: 0;
+}
