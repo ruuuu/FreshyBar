@@ -189,6 +189,97 @@ h1, h2, h3, p, fieldset{
 
 /*goods*/
 
+.goods {
+      padding: 60px 0 70px;
+}
+
+
+.goods__title{
+      margin-bottom: 40px;
+      font-size: 44px;
+      font-weight: 900;
+}
+
+
+.goods__list{
+      display: grid;
+      grid-template-columns: repeat(4, 280px);
+      gap: 20px;
+}
+
+
+.goods__item {
+     
+
+}
+
+.goods__card {
+      padding: 12px;
+      border-radius: 32px;
+      background-color: #fff;
+}
+
+
+.cocktail {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      height: 100%;
+
+}
+
+
+.cocktail__img {
+      width: 100%;
+      border-radius: 24px;
+}
+
+
+.cocktail__content { 
+      flex-grow: 1;  /* флекс элемент, если будет свободное простарвно, то элемент увеличится в размере */ 
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 12px;
+      line-height: 1.1;
+}
+
+
+.cocktail__text {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+}
+
+
+.cocktail__title {
+      margin-right: 5px;
+      font-size: 18px;
+      font-weight: 400;
+}
+
+
+.cocktail__price {
+      font-weight: 600;
+}
+
+
+.cocktail__size {  
+      margin-left: auto; /* флекс элемент прижмется в право либо align-self: flex-end (вдоль поперечнной оси) */
+      font-size: 12px;
+      font-weight: 600;
+      color: #C1C1C1;
+      margin-bottom: 10px;
+}
+
+
+.cocktail__btn {
+      margin-top: auto;  /* флекс элемнт прижмется к низу */
+      font-weight: 600;
+}
+
+
+      
 /*footer*/
 .footer {
       padding-top: 50px;
