@@ -246,13 +246,16 @@ h1, h2, h3, p, fieldset{
 
 
 .cocktail__text {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+     
+     
       margin-bottom: 2px;
 }
 
 
 .cocktail__title {
+      grid-row: 1/3;
       margin-right: 5px;
       font-size: 18px;
       font-weight: 400;
@@ -260,11 +263,17 @@ h1, h2, h3, p, fieldset{
 
 
 .cocktail__price {
+      grid-column: 2/3;
       font-weight: 600;
 }
 
 
 .cocktail__size {  
+      /* flex: 0 0 100%; */
+      flex-grow: 0;  /* если будет свободное пространство, то элемнет не увеличится*/
+      flex-shrink: 0;   /* если не будет свободного пространства, то элемнет не сожмется*/
+      flex-basis: 100%;
+     
       margin-left: auto; /* флекс элемент прижмется в право либо align-self: flex-end (вдоль поперечнной оси) */
       font-size: 12px;
       font-weight: 600;
