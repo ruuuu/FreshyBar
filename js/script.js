@@ -40,8 +40,63 @@ const createCard = (cocktailItem) => {
 
 
 
+// СКРИПТ РАБОТАЮЩИЙ С ЛЮБЫМ МОЛ ОКНОМ:
+const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - класс  модалки,  btnOpen - класс кнпоки открытия модалки,   time - время плавности
+      
+      const buttonElem = document.querySelector(btnOpen);
+      const modalElem =  document.querySelector(modal);
+
+       // задемм стили модалке:
+      modalElem.style.cssText =  `   
+            display: flex;
+            visibility: hidden;
+            opacity: 0; 
+            transition: opacity ${time}ms ease-in-out; /* opacity поменяется втечение time мс */
+      `;
+
+
+    
+      const closeModal = (evt) => {
+
+            const code = evt.code;                    // код клавиши на котрую нажали
+            if(evt.target === modalElem || code === 'Escape'){             // если нажали на модалку
+                  modalElem.style.opacity = 0;
+
+                  setTimeout(() => {            // переданная фукнуия вызовется через вреям time
+                        modalElem.style.visibility = 'hidden';
+                  }, time);
+            }
+
+            window.removeEventListener('keydown', closeModal);  // снимаем слушатель, чтоб при нажатии любой клавиши, не вызываелся closeModal
+              
+      };
+
+
+      const openModal = () => {
+            modalElem.style.visibility = 'visible';
+            modalElem.style.opacity = 1;
+
+            window.addEventListener('keydown', closeModal);  // прианжаати  на клавишу keydown
+      };
+
+
+      
+      buttonElem.addEventListener('click',  openModal);
+      modalElem.addEventListener('click', closeModal);
+
+      return { openModal, closeModal };             // возвзращаем две функции
+};
+
+
+
+
 const init = async() => {
+
+      modalControler( { modal: '.modal__order' , btnOpen: '.header__btn' } );
+
       const goodsListElem = document.querySelector('.goods__list');     // ul
+
+      
       
       const data = await getData();  // [{},{},{}].  Тк getData асинхроная фукния, пэтому она вернет промис. Чтобы увидеть данные, ставим await
 
@@ -53,7 +108,7 @@ const init = async() => {
             const article = createCard(coctailElem);
             li.append(article);
 
-            return li;  // <li> </li>
+            return li;  // <li> ... </li>
       });
       
       
@@ -64,4 +119,6 @@ const init = async() => {
 };
 
 
-init();
+
+
+init();  // отсюда все начинается

@@ -60,7 +60,7 @@
                                                       <p class="cocktail__price text-red"> 260 Р</p>
                                                 </div>
                                                 <p class="cocktail__size">300 мл</p>
-                                                <button class="btn cocktail__btn">Добавить</button>
+                                                <button class="btn cocktail__btn  cocktail__btn-make">Добавить</button>
                                           </div>
                                     </article>
                               </li>
@@ -177,6 +177,75 @@
                   </ul>
             </div>
       </footer>
+
+      <div class="modal modal__order"><!-- оверлей -->
+            <div class="modal__main"> <!-- модалка Корзина  находится в центер и скроллится -->
+                  <div class="order"><!-- мод окно -->
+                        <h2 class="order__title"> Корзина <sup class="text-red order__count">2</sup> </h2>
+
+                        <ul class="order__list">
+                              <li class="order__item">
+                                    <img class="order__img" src="img/6.jpg" alt="">
+                                    <div class="order__info">
+                                          <h3 class="order__name">Манго смузи</h3>
+                                          <ul class="order__topping-list">
+                                                <li class="order__topping-item"> 300 мл </li>
+                                                <li class="order__topping-item">Биоразлагаемый стакан</li>
+                                                <li class="order__topping-item">Лед</li>
+                                                <li class="order__topping-item">Мята</li>
+                                          </ul>
+                                    </div>
+
+                                    <button class="order__item-delete" aria-label="Удалить заказ из корзины"></button>
+                                    <p class="order__item-price">345&nbsp;Р</p>
+                              </li>
+
+                              <li class="order__item">
+                                    <img class="order__img" src="img/6.jpg" alt="">
+                                    <div class="order__info">
+                                          <h3 class="order__name">Манго смузи</h3>
+                                          <ul class="order__topping-list">
+                                                <li class="order__topping-item"> 300 мл </li>
+                                                <li class="order__topping-item">Биоразлагаемый стакан</li>
+                                                <li class="order__topping-item">Лед</li>
+                                                <li class="order__topping-item">Мята</li>
+                                          </ul>
+                                    </div>
+
+                                    <button class="order__item-delete" aria-label="Удалить заказ из корзины"></button>
+                                    <p class="order__item-price">345&nbsp;Р</p>
+                              </li>
+                        </ul>
+
+
+                        <div class="order__price">
+                              <p class="order__price-title">Итого: </p>
+                              <p class="order__total-price text-red"> 520&nbsp;Р </p>
+                        </div>
+
+
+                        <form class="order__form">
+                              <label class="order__label">
+                                    <input class="order__input" type="text" placeholder="Ваше имя">
+                              </label>
+
+                              <label class="order__label">
+                                    <input class="order__input" type="text" placeholder="Ваш телефон">
+                              </label>
+
+                              <button class="order__submit">Заказать</button>
+                        </form>
+                  </div>
+            </div>
+      </div>
+
+
+
+      <div class="modal modal__2"><!-- оверлей -->
+            <div class="modal__main"> <!-- модалка находится в центре и скроллится -->
+                 
+            </div>
+      </div>
       
 </body>
 </html>

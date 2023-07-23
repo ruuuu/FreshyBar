@@ -75,6 +75,12 @@ ul{
 }
 
 
+img{
+      max-width: 100%;
+      height: auto;
+}
+
+
 h1, h2, h3, p, fieldset{
       margin: 0;
 }
@@ -336,5 +342,188 @@ h1, h2, h3, p, fieldset{
 
 
 .footer__developer-link {
+}
+
+
+.modal{ /* overley */
+     display: flex;
+      position: fixed; /* при скролле, оверлей модалка не будет срроллиться */
+      top:0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 20px;
+      overflow-y: auto;  /* при скролле, контент будет скроллиться, а оверлей нет */
+      display: none;  /* изначально окно Закрыто */ 
+      background-color: rgba(0,0,0, 0.5);
+      cursor: pointer;
+}
+
+
+.modal__main{ /*  сама модалка */
+      margin: auto;  /* центруется */
+      cursor: default;
+      width: 100%;
+      max-width: 780px; /* из макета */
+
+}
+
+
+.order {
+      padding: 40px 60px;
+      border-radius: 24px;
+      background-color:  #F8E8E2;
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+
+.order__title {
+      margin-bottom: 40px;
+      font-size: 44px;
+      font-weight: 900;
+      line-height: 1.1;
+}
+
+
+.order__count{
+
+}
+
+
+.order__list {
+      margin-bottom: 40px; 
+}
+
+
+.order__item {
+      display: grid;
+      grid-template-columns: 70px  1fr  min-content;  /* 1fr - возьмет оставшееся место, min-content т.е. ширина колнки  будет подстраиваться под  ширину контента */ 
+      gap: 12px;
+      grid-template-areas:   /* 2 ряда, 3 столбца  */
+            "image info delete"    
+            "image info price"
+      ;
+      align-items: center;
+      border-top: 1px solid #FFF;
+      padding: 16px 0;
+}
+
+
+.order__item:last-child{
+      border-bottom: 1px solid #FFF;
+} 
+
+
+.order__img {
+      grid-area: image;
+}
+
+
+.order__info {
+      grid-area: info;
+}
+
+.order__name {
+      margin-bottom: 8px;
+      font-weight: 400;
+      line-height: 1.1;
+}
+
+
+.order__topping-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      color: #D5B4A8;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.1;
+}
+
+
+.order__topping-item {
+      margin-bottom: 0;
+ }
+
+
+.order__item-delete {
+      grid-area: delete;
+      justify-self: flex-end;  /* выранивате по горионтали: прижмет грид элемент к правому краю ячейки*/
+      align-self: flex-start; 
+      background-image: url('../img/close.svg');
+      background-repeat: no-repeat;
+      width: 24px;
+      height: 24px;
+}
+
+
+.order__item-price {
+      grid-area: price;
+      justify-self: flex-end;
+      align-self: flex-end;
+}
+
+
+.order__price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      font-weight: 600;
+}
+
+
+.order__price-title {
+      }
+
+
+.order__total-price {
+      }
+
+
+.order__form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+
+}
+
+.order__label {
+      }
+
+.order__input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background-color: #fff;
+      border: none;
+}
+
+
+.order__input::placeholder{
+      color: #C1C1C1;
+      font-size: 18px;
+      line-height: 1.1;
+}
+
+.order__input:hover{
+      background-color: #F6F6F6;
+}
+
+
+
+.order__input:focus{
+      outline: none;
+      border: 1px solid #D5B4A8;
+      background-color:  #FFF;
+}
+
+.order__input:active{
+      border: 1px solid #D5B4A8;
+      background-color:  #FFF;
+}
+
+.order__submit {
+
       }
 
