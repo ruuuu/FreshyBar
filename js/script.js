@@ -38,6 +38,30 @@ const createCard = (cocktailItem) => {
 };
 
 
+const scrollService =  {  // при открытой модалке, задний фон скроллится не будет
+      
+      scrollPosition: 0,            // нач позиция скролла
+      disableScroll(){
+            this.scrollPosition = window.scrollY;                             // window - объект бразуера, текущая позиция скролла
+            document.documentElement.style.scrollBehavior = 'auto';             //   убираем вертикальный скролл
+            document.body.style.cssText = `
+                  overflow: hidden;
+                  position: fixed;  /* задний фон не скроллится */
+                  top: -${this.scrollPosition}px;   /* задний фон не еудет вверх */
+                  left: 0; /*чтобы станица не уезжаа влево*/ 
+                  height: 100vh;
+                  width: 100vw;
+                  padding-right: ${window.innerWidth - document.body.offsetWidth}px;   /* ширина окна браузера(страница со скроллом) - ширина страницы */
+            `;
+      },
+      enabledScroll(){
+            document.body.style.cssText = '';  //  уберем все что задали в  disableScroll()
+
+            window.scroll({ top: this.scrollPosition });                // скроллим к верху, чтобы станица не прыгала вверх после закрытия модалки
+            document.documentElement.style.scrollBehavior = "";         // document.documentElement - html 
+      }
+};
+
 
 
 // СКРИПТ РАБОТАЮЩИЙ С ЛЮБЫМ МОЛ ОКНОМ:
@@ -61,9 +85,11 @@ const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - кл�
             const code = evt.code;                    // код клавиши на котрую нажали
             if(evt.target === modalElem || code === 'Escape'){             // если нажали на модалку
                   modalElem.style.opacity = 0;
+                 
 
-                  setTimeout(() => {            // переданная фукнуия вызовется через вреям time
-                        modalElem.style.visibility = 'hidden';
+                  setTimeout(() => {                                    // переданная фукнуия вызовется через вреям time
+                        modalElem.style.visibility = 'hidden';           // модала исчезнет
+                        scrollService.enabledScroll();
                   }, time);
             }
 
@@ -77,6 +103,7 @@ const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - кл�
             modalElem.style.opacity = 1;
 
             window.addEventListener('keydown', closeModal);  // прианжаати  на клавишу keydown
+            scrollService.disableScroll();
       };
 
 
@@ -92,7 +119,8 @@ const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - кл�
 
 const init = async() => {
 
-      modalControler( { modal: '.modal__order' , btnOpen: '.header__btn' } );
+      modalControler( { modal: '.modal__order',  btnOpen: '.header__btn-order' } );
+      modalControler( { modal: '.modal__make',  btnOpen: '.cocktail__btn--make' } );  
 
       const goodsListElem = document.querySelector('.goods__list');     // ul
 
