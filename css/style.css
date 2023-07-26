@@ -82,6 +82,11 @@ img{
 }
 
 
+fieldset{
+
+      border: 0;
+}
+
 h1, h2, h3, p, fieldset{
       margin: 0;
 }
@@ -349,6 +354,8 @@ h1, h2, h3, p, fieldset{
 }
 
 
+/* модалка order: */
+
 .modal{ /* overley */
      display: flex;
       position: fixed; /* при скролле, оверлей модалка не будет срроллиться */
@@ -376,9 +383,7 @@ h1, h2, h3, p, fieldset{
 }
 
 
-.modal__main--make{
-      max-width: 640px; /* из макета */
-}
+
 
 
 .order {
@@ -545,4 +550,126 @@ h1, h2, h3, p, fieldset{
       justify-self: flex-end;
       width: 139px;
 }
+
+
+
+/* модалка make: */
+
+.modal__main--make{
+      max-width: 640px; /* из макета */
+}
+
+
+.make {
+      padding: 60px 40px;
+      border-radius: 24px;
+      background-color:  #F8E8E2;
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+
+.make__title {
+      margin-bottom: 40px;
+      
+}
+
+
+.make__title  sup{
+      top: 0;
+      font-size: 44px;
+}
+
+
+.make__form {
+      display: grid;
+      grid-template-areas: 
+            "ingred  ingred"
+            "topping  cup"
+            "footer footer";
+      column-gap: 55px;
+      row-gap: 40px;
+}
+
+
+.make__fieldset {
+      margin: 0;
+      padding: 0;
+      
+}
+
+
+.make__fieldset--ingredients { /* грид элемент */
+      grid-area: ingred;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);   
+      column-gap: 25px;  
+      row-gap: 20px; 
+}
+
+.make__label {
+      font-size: 16px;
+      line-height: 1.1;
+      }
+
+
+.make__fieldset--topping {
+      grid-area: topping;
+}
+
+
+.make__legend {
+      margin-bottom: 24px;
+      color: #D5B4A8;
+      font-size: 18px;
+      }
+
+
+.make__fieldset--cup {
+      grid-area: cup;
+}
+
+
+.make__footer {
+      grid-area: footer;
+      display: flex;
+      gap: 39px;
+}
+
+/* input span{
+      font-size: 12px;
+      color: #D5B4A8;
+} */
+
+.make__add-btn {
+     
+}
+
+.make__total {
+      
+      }
+
+      
+.make__total-price {
+      }
+
+.make__total-size {
+}
+
+
+
+.checkbox {
+
+}
+
+
+.checkbox__input {
+      }
+
+
+.radio {
+}
+
+
+.radio__input {
+      }
 
