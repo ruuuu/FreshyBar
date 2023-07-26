@@ -41,11 +41,11 @@ html{
 
 body{
       min-width: 320px;
-      min-height: 100vh;  /* высота экрана */
+      min-height: 100vh;  /* vh - высота экрана, 100% от высоты экрана */
       font-family: 'Mulish', sans-serif;  /* sans-serif запасной шрифт*/
       font-size: 18px;
       font-weight: 400;
-      line-height: 1.1;  /* в % не указывам */
+      line-height: 1.1;  /* в % не указывам, иначе будет проецент от размера шрифта */
       color: #000;
       background-color: #F8E8E2;
       background-image: url("/img/bg.svg");
@@ -581,13 +581,8 @@ h1, h2, h3, p, fieldset{
 
 
 .make__form {
-      display: grid;
-      grid-template-areas: 
-            "ingred  ingred"
-            "topping  cup"
-            "footer footer";
-      column-gap: 55px;
-      row-gap: 40px;
+     display: flex;
+     flex-direction: column;     
 }
 
 
@@ -598,61 +593,76 @@ h1, h2, h3, p, fieldset{
 }
 
 
-.make__fieldset--ingredients { /* грид элемент */
-      grid-area: ingred;
+.make__fieldset--ingredients { /* флекс элемент */
       display: grid;
-      grid-template-columns: repeat(3, 1fr);   
-      column-gap: 25px;  
-      row-gap: 20px; 
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px 55px;
+      margin-bottom: 32px;
 }
+
+
+.make__wrap-add{
+      display: flex;
+      gap: 55px;
+      margin-bottom: 40px;
+}
+
 
 .make__label {
       font-size: 16px;
       line-height: 1.1;
-      }
+}
+
+
+
 
 
 .make__fieldset--topping {
-      grid-area: topping;
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
 }
 
 
 .make__legend {
       margin-bottom: 24px;
-      color: #D5B4A8;
-      font-size: 18px;
-      }
+      color: #D5B4A8;  
+}
 
 
 .make__fieldset--cup {
-      grid-area: cup;
+     
+      
 }
 
 
 .make__footer {
-      grid-area: footer;
       display: flex;
+      align-items: center;
       gap: 39px;
 }
 
-/* input span{
-      font-size: 12px;
-      color: #D5B4A8;
-} */
 
 .make__add-btn {
+      width: 232px;
      
 }
 
+
 .make__total {
-      
-      }
+      font-weight: 600;
+}
 
       
 .make__total-price {
-      }
+      
+}
+
 
 .make__total-size {
+      text-align: right;
+      font-size: 12px;
+      color: #D5B4A8;   
 }
 
 
@@ -664,6 +674,12 @@ h1, h2, h3, p, fieldset{
 
 .checkbox__input {
       }
+      
+
+.make__upsale{
+      font-size: 12px;
+      color: #D5B4A8;
+}
 
 
 .radio {
