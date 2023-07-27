@@ -79,7 +79,7 @@ const scrollService =  {  // при открытой модалке, задни�
 
 
 // СКРИПТ РАБОТАЮЩИЙ С ЛЮБЫМ МОЛ ОКНОМ:
-const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - класс  модалки,  btnOpen - класс кнпоки открытия модалки,   time - время плавности
+const modalControler = ( { modal, btnOpen, time = 300, open, close } ) => {  // modal - класс  модалки,  btnOpen - класс кнпоки открытия модалки,   time - время плавности
       
       const buttonElems = document.querySelectorAll(btnOpen);
       const modalElem =  document.querySelector(modal);
@@ -101,9 +101,12 @@ const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - кл�
                   modalElem.style.opacity = 0;
                  
 
-                  setTimeout(() => {                                    // переданная фукнуия вызовется через вреям time
+                  setTimeout(() => {                                     // переданная фукнуия вызовется через вреям time
                         modalElem.style.visibility = 'hidden';           // модала исчезнет
                         scrollService.enabledScroll();
+                        if(close){  // если есть фукнуия close
+                              close();
+                        }
                   }, time);
             }
 
@@ -111,11 +114,15 @@ const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - кл�
       };
 
 
-      const openModal = () => {
+      const openModal = (evt) => {
+            if(open){
+                  open({ btn: evt.target });  // evt.target - вернет элемент(кнопка  Добавить у нас), на котрый нажали
+            }
+            
             modalElem.style.visibility = 'visible';
             modalElem.style.opacity = 1;
 
-            window.addEventListener('keydown', closeModal);  // прианжаати  на клавишу keydown
+            window.addEventListener('keydown', closeModal);  // при нажати  на клавишу keydown
             scrollService.disableScroll();
       };
 
@@ -214,6 +221,16 @@ const calculateMakeYourOwn = () => {
 
 
 
+const calculateAdd = () => {
+
+
+      return { fillInForm, reserForm }   // вернет фукнии
+};
+
+
+
+
+
 const init = async() => {
 
       modalControler( { modal: '.modal__order',  btnOpen: '.header__btn-order' } );
@@ -239,10 +256,20 @@ const init = async() => {
       
       console.log('cartsCocktail  ', cartsCocktail);  // [ li, li, li ]
 
-      goodsListElem.append(...cartsCocktail); // ... спред оператор
+      const { fillInForm, reserForm } = calculateAdd();           // вернет две фукнции заполнения формы и очищение
+
+
+      goodsListElem.append(...cartsCocktail);                     // ... спред оператор
 
       modalControler( { modal: '.modal__make-your-own',  btnOpen: '.cocktail__btn--make' } );  // при нажатии на Добавить откроется модалка 
-      modalControler( { modal: '.modal--add',  btnOpen: '.cocktail__btn--add' } );  
+      modalControler( { modal: '.modal--add',  btnOpen: '.cocktail__btn--add', 
+            open({ btn }){
+                  const id = btn.dataset.id;                                        // получаем значение дата атрибута data-id у нажатой кнопки Добавить. Из дата атрибут авсегда приходит строка
+                  const item = data.find((elem) => elem.id.toString() === id );                // перебираем товары с серевра, item = {} -товар
+                  fillInForm(item);
+            }, 
+            close: reserForm
+       } );  
      
 };
 
