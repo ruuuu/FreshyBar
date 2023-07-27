@@ -107,8 +107,7 @@ const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - кл�
                   }, time);
             }
 
-            window.removeEventListener('keydown', closeModal);  // снимаем слушатель, чтоб при нажатии любой клавиши, не вызываелся closeModal
-              
+            window.removeEventListener('keydown', closeModal);  // снимаем слушатель, чтоб при нажатии любой клавиши, не вызываелся closeModal      
       };
 
 
@@ -119,6 +118,7 @@ const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - кл�
             window.addEventListener('keydown', closeModal);  // прианжаати  на клавишу keydown
             scrollService.disableScroll();
       };
+
 
       buttonElems.forEach((btn) => {
             btn.addEventListener('click',  openModal);
@@ -132,18 +132,62 @@ const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - кл�
 
 
 
+
 const getFormData = (form) => {
       const formData = new FormData(form);
-      console.log('formData ', formData);
+      
+      const data = {};  // в цикле будем его заполнять. Будет то чnо выбрали: { ingredients: ['Клубника', 'Банан', 'Маракуйя'],  topping: ['Лед', 'Мята'],  price: "undefined" }
+
+      for (const [name, value]  of  formData.entries()){
+          
+            if(data[name]){                                 // если это массив
+                  if(!Array.isArray(data[name])){           // если data[name] это не массив
+                        data[name] = [data[name]];          // делаем его массивом
+                  }  
+
+                  data[name].push(value);   // есил свойтсов уже есть, то добавлем значение value у чекбокса в []                
+            }
+            else{
+                  data[name] = value;  // добавлем свойство ingredients/topping/cup
+            }
+      }
+      
+      console.log('data getFormData ', data);       // выбраные чекбоксы { ingredients: ['Клубника', 'Банан', 'Маракуйя'],  topping: ['Лед', 'Мята'],  cup: ['Пластиковый'],  price: "undefined" }
+      
+      return data;                                 
 };
+
+
 
 
 const calculateTotalPrice = (form, startPrice) => {
       let totalPice = startPrice;
-      const data = getFormData(form);
-      console.log('data ', data);
+      const data = getFormData(form);           // то, что выбрали: data = { ingredients: ['Клубника', 'Банан', 'Маракуйя'],  topping: ['Лед', 'Мята'],  cup: 'Пластиковый'/'Биоразлагаемый',  price: "undefined" }
+      // console.log('data from calculateTotalPrice ', data);
+
+      if(Array.isArray(data.ingredients)){      // если это массив
+            data.ingredients.forEach((item) => {
+                  totalPice += price[item] || 0;
+            });
+      }
+      else{
+            totalPice += price[data.ingredients] || 0;
+      }
 
 
+      if(Array.isArray(data.topping)){      // если это массив
+            data.topping.forEach((item) => {
+                  totalPice += price[item] || 0;
+            });
+      }
+      else{
+            totalPice += price[data.topping] || 0;
+      }
+
+
+      totalPice += price[data.cup] || 0;
+
+      return totalPice;
 };
 
 
