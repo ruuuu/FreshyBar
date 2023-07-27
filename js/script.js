@@ -1,5 +1,18 @@
 const API_URL = "https://salty-heliotrope-end.glitch.me/";              // выгрузила на Glitch
 
+const price = {
+      Клубника: 60, 
+      Киви: 55, 
+      Банан: 70, 
+      Маракуйя: 55, 
+      Манго: 90,  
+      Яблоко: 30, 
+      Мята: 20, 
+      Лед: 10, 
+      Биоразлагаемый: 5, 
+      Пластиковый: 2
+};
+
 
 
 const getData = async () => {    // ттк внутри фукнции есть await, то  пишем async(асинхронная )
@@ -18,7 +31,6 @@ const getData = async () => {    // ттк внутри фукнции есть 
 
 const createCard = (cocktailItem) => {
 
-
       const cocktail = document.createElement('article');
       cocktail.classList.add('goods__card', 'cocktail');  // добавили два класса
 
@@ -30,12 +42,14 @@ const createCard = (cocktailItem) => {
                         <p class="cocktail__price text-red"> ${cocktailItem.price} Р</p>
                   </div>
                   <p class="cocktail__size">${cocktailItem.size} мл</p>
-                  <button class="btn cocktail__btn"  data-id="${cocktailItem.id}">Добавить</button>
+                  <button class="btn cocktail__btn cocktail__btn--add"  data-id="${cocktailItem.id}">Добавить</button>
             </div>
       `;
 
       return cocktail;  // <article> ... </article>
 };
+
+
 
 
 const scrollService =  {  // при открытой модалке, задний фон скроллится не будет
@@ -67,7 +81,7 @@ const scrollService =  {  // при открытой модалке, задни�
 // СКРИПТ РАБОТАЮЩИЙ С ЛЮБЫМ МОЛ ОКНОМ:
 const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - класс  модалки,  btnOpen - класс кнпоки открытия модалки,   time - время плавности
       
-      const buttonElem = document.querySelector(btnOpen);
+      const buttonElems = document.querySelectorAll(btnOpen);
       const modalElem =  document.querySelector(modal);
 
        // задемм стили модалке:
@@ -106,12 +120,51 @@ const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - кл�
             scrollService.disableScroll();
       };
 
-
+      buttonElems.forEach((btn) => {
+            btn.addEventListener('click',  openModal);
+      });
       
-      buttonElem.addEventListener('click',  openModal);
+     
       modalElem.addEventListener('click', closeModal);
 
       return { openModal, closeModal };             // возвзращаем две функции
+};
+
+
+
+const getFormData = (form) => {
+      const formData = new FormData(form);
+      console.log('formData ', formData);
+};
+
+
+const calculateTotalPrice = (form, startPrice) => {
+      let totalPice = startPrice;
+      const data = getFormData(form);
+      console.log('data ', data);
+
+
+};
+
+
+
+const calculateMakeYourOwn = () => {
+       
+      const formMakeOwn = document.querySelector('.make__form--make-your-own'); // form
+      const makeInputPrice = formMakeOwn.querySelector('.make__input--price');  // input
+      const makeTotalPrice = formMakeOwn.querySelector('.make__total-price');
+
+
+      const handlerChange = () => {
+            const totalPrice = calculateTotalPrice(formMakeOwn, 150);   // 150-стартовая цена
+            makeInputPrice.value =  totalPrice;                         // запсиываем значение в поле makeInputPrice
+            makeTotalPrice.textContent = `${totalPrice} Р`;
+      };
+
+
+      formMakeOwn.addEventListener('change',  handlerChange);
+      handlerChange();
+
 };
 
 
@@ -120,13 +173,13 @@ const modalControler = ( { modal, btnOpen, time = 300 } ) => {  // modal - кл�
 const init = async() => {
 
       modalControler( { modal: '.modal__order',  btnOpen: '.header__btn-order' } );
-      modalControler( { modal: '.modal__make',  btnOpen: '.cocktail__btn--make' } );  
-
+     
+      calculateMakeYourOwn();
       const goodsListElem = document.querySelector('.goods__list');     // ul
 
       
       
-      const data = await getData();  // [{},{},{}].  Тк getData асинхроная фукния, пэтому она вернет промис. Чтобы увидеть данные, ставим await
+      const data = await getData();  // [{},{},{}].  Тк getData асинхроная фукния, пэтому она вернет промис. Чтобы плучить понятные  данные, ставим await
 
       const cartsCocktail = data.map((coctailElem) => {           // coctailElem = { id, title, description, img, price, size }, map вернет массив [li, li, li]
                       
@@ -143,6 +196,9 @@ const init = async() => {
       console.log('cartsCocktail  ', cartsCocktail);  // [ li, li, li ]
 
       goodsListElem.append(...cartsCocktail); // ... спред оператор
+
+      modalControler( { modal: '.modal__make-your-own',  btnOpen: '.cocktail__btn--make' } );  // при нажатии на Добавить откроется модалка 
+      modalControler( { modal: '.modal--add',  btnOpen: '.cocktail__btn--add' } );  
      
 };
 

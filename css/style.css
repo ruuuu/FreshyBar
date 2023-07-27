@@ -667,14 +667,76 @@ h1, h2, h3, p, fieldset{
 
 
 
-.checkbox {
-
+.checkbox { /* label */
+      position: relative;
+      display: block;
+      padding-left: 32px;
+      line-height: 24px; /* тк размер чекбокса 24px */
 }
 
 
-.checkbox__input {
-      }
-      
+.checkbox__input { /* input */
+      position: absolute;
+      -moz-appearance: none;  /* для ff */
+      -webkit-appearance: none;  /* для сафари */
+      appearance: none; /* скрыли */
+
+      width: 24px;
+      height: 24px;
+      margin-left: -32px;  
+}
+
+
+.checkbox__input::before{ /* квадратик чекбокса */
+      content: "";
+      position: absolute;
+      top: 0;  
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: block;
+      border-radius: 2px;
+      background-color: #FFF;
+
+} 
+
+
+.checkbox__input::after{ /* галочка в чекбоксе */
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);  /* для центрровки юзаем top, left и transform */
+      width: 12px; /* рамзеры галочки */
+      height: 15px;
+      background-image: url("../img/check.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0;  /* чтоб галочка не отображаалсь */
+      transition: opacity 0.3s ease-in-out;  /* плавно появляется */
+} 
+   
+
+
+.checkbox__input:checked::after{  /* нажатая галочка */
+      opacity: 1;       /* галочка отображается */
+}
+
+
+.checkbox__input:hover::before{  
+     background-color: #F6F6F6;
+}
+
+
+.checkbox__input:focus::before{
+      border: 1px solid #D5B4A8;
+}
+
+
+.checkbox__input:focus-visible{
+      outline: none;
+}
+
 
 .make__upsale{
       font-size: 12px;
