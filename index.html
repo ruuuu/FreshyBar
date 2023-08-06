@@ -242,7 +242,7 @@
       </div>
 
  
-      <!-- мод окно Consructor -->
+      <!-- мод окно Consructor коктейля, модалка с чекбоксами: -->
       <div class="modal modal__make-your-own">  <!-- оверлей -->
             <div class="modal__main modal__main--make"> <!-- модалка находится в центре и скроллится -->
                  <div class="make">  <!-- мод окно  -->
@@ -303,7 +303,7 @@
                               <div class="make__footer">
                                     <button class="btn make__add-btn" type="submit"> Добавить </button>
                                     <div class="make__total">
-                                          <input class="make__input make__input--price" type="hidden" name="price" value="150"><!-- добавили скрытое поле для цены -->
+                                          <input class="make__input make__input--price" type="hidden" name="price" value="150"> <!-- добавили скрытое поле для вывода цены -->
                                           <p class="text-red  make__total-price"> 150 Р </p>
                                           <p class="make__total-size"> 200мл </p>
                                     </div> 
@@ -313,13 +313,15 @@
             </div>
       </div>
 
-      <!-- мод окно  Cart -->
+      <!-- мод окно  Cart(Корзина), при нажатии на Добавить у картчоки кокnейля, откроется это окно: -->
       <div class="modal modal--add">  <!-- оверлей -->
             <div class="modal__main modal__main--make"> <!-- модалка находится в центре и скроллится -->
                  <div class="make">  <!-- мод окно -->
-                        <h3 class="order__title make__title"> Банановый смузи </h3>
+                        
+                  <h3 class="order__title make__title"> Банановый смузи </h3>
 
                         <form class="make__form  make__form--add">
+                              <input class="make__input-title" type="hidden" name="title"> <!--это поле добавили чтобы  отрпавим на сервр -->
                               <div class="make__wrap-add"> 
                                     <fieldset class="make__fieldset make__fieldset--topping">
                                           <legend class="make__legend"> Дополнительно: </legend>
@@ -341,7 +343,7 @@
                                                 Биоразлагаемый <span class="make__upsale">(+10 Р)</span>
                                           </label>
                                           <label class="make__label radio">
-                                                <input class="radio__input" type="radio" name="topping" value="Пластиковый">
+                                                <input class="radio__input" type="radio" name="topping" value="Пластиковый" checked><!-- checked ыто есть  выбан по учмрланчию -->
                                                 Пластиковый <span class="make__upsale">(+0 Р)</span>
                                           </label>
                                     </fieldset>
@@ -350,10 +352,12 @@
                               <div class="make__footer">
                                     <button class="btn make__add-btn" type="submit"> Добавить </button>
                                     <div class="make__total">
+                                          <input class="make__input-start-price" type="hidden">  <!-- это поле на сервер отправлять не будем -->
                                           <p class="text-red  make__total-price"> 340 Р </p>
+                                          <input class="make__input-price" type="hidden" name="price"> <!--это поле добавили чтобы  отрпавим на сервр -->
                                           <p class="make__total-size"> 200мл </p>
+                                          <input class="make__input-size" type="hidden" name="size"> <!--это поле добавили чтобы отрпавим на сервр -->
                                     </div>
-                                    
                               </div>
                         </form>
                  </div>
