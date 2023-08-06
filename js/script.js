@@ -14,6 +14,34 @@ const price = {
 };
 
 
+// корзину храним в  localStorage:
+const cartDataControl = {
+      get(){
+            return JSON.parse(localStorage.getItem('freshyBarCart') || '[]');  // из localStorage приходит данные в формает json, поэтому  их парсим для получения  удобочитаемого вида
+      },
+      add(item){                                      // item={} коктейль
+            const cartData = this.get();              // cartData = [ {}, {}, {} ]
+            item.id =  Math.random().toString(36).substring(2, 8);    // придумываем и добавляем коктейлю id, выбирае из 36 символов, берем тлоько со 2 по 8 символ(то есть 6-ти значный id)
+            cartData.push(item);                      // добавляем item  в  cartData
+            localStorage.setItem('freshyBarCart', JSON.stringify(cartData));      // обновили localStorage, превращаем из строки в JSON
+      },
+      remove(id){                                                 // id удаляемого коктейля
+            const cartData = this.get(); 
+            
+            const index = cartData.findIndex((item) => item.id === id);   // нашли индекс удаляемого коктейля, если такогтэлемента нет, то вернет -1
+            if(index !== -1){                                              // если удаляемый элемент есть  
+                  cartData.splice(index, 1);                                  // удаляет из массива часть массива, начиная с элемента с индексом index, число удаляемых элементов равно 1
+            }
+            localStorage.setItem('freshyBarCart', JSON.stringify(cartData));    
+
+      },
+      clear(){                                              // после отправки, очищаем localStorage
+            localStorage.removeItem('freshyBarCart');
+      }
+      
+};
+
+
 
 const getData = async () => {    // тк внутри фукнции есть await, то  пишем async(асинхронная)
 
@@ -23,7 +51,6 @@ const getData = async () => {    // тк внутри фукнции есть aw
       // данные с сервера возвращаются в ввиде строки, но в формате json 
       const data = await response.json();  // метод json()тоже асинхронный, поэтму ставим  await
     
-
       return data;            // [ {}, {}, {} ]
 };
 
@@ -201,29 +228,44 @@ const calculateTotalPrice = (form, startPrice) => {
 };
 
 
-
+// подсчет стоимости в форме Конструктор коктейля:
 const calculateMakeYourOwn = () => {
-       
-      const formMakeOwn = document.querySelector('.make__form--make-your-own'); // form
+
+      const modalMakeOwn = document.querySelector('.modal__make-your-own');  // модалка
+      const formMakeOwn =  modalMakeOwn.querySelector('.make__form--make-your-own'); // form Consructor коктейля,
       const makeInputPrice = formMakeOwn.querySelector('.make__input--price');  // input
       const makeTotalPrice = formMakeOwn.querySelector('.make__total-price');
+      const makeAddBtn = modalMakeOwn.querySelector('.make__add-btn');  //  кнпока Добавить в форме
+      const makeInputTitle = modalMakeOwn.querySelector('.make__input-title');
+
 
 
       const handlerChange = () => {
             const totalPrice = calculateTotalPrice(formMakeOwn, 150);   // 150-стартовая цена
+            const data = getFormData(formMakeOwn);
+            if(data.ingredients){
+                  const ingredients = Array.isArray(data.ingredients)  ?  data.ingredients.join(', ') : data.ingredients;               // если data.ingredients является массивом, то разлоим  элементы в виде строки через запятую
+                  makeInputTitle.value = `Конструктор:  ${ingredients}`;
+                  makeAddBtn.disabled = false;                              // раздизейблили кнпоку
+            }else{
+                  makeAddBtn.disabled = true;                                 // задизейблили кнпоку
+            }
             makeInputPrice.value = totalPrice;                         // запсиываем значение в поле makeInputPrice
             makeTotalPrice.textContent = `${totalPrice} Р`;
       };
 
 
       formMakeOwn.addEventListener('change',  handlerChange);           // собыие сработает, когда поставим/уберем чекбокс/радиобаттоны
+      
+      //formControl(formMakeOwn);
+      
       handlerChange();  // один раз надо вызвать функицю
 };
 
 
 
 
-// подсчет стоиомтси коктецля в Cart:
+// подсчет стоиомости коктейля в Cart(не Корзина):
 const calculateAdd = () => {
     
       const modalAdd = document.querySelector('.modal--add');  // модалка Cart
@@ -271,8 +313,6 @@ const calculateAdd = () => {
       };
 
 
-
-
       return { fillInForm, resetForm }   // вернет объект (две фукнии): fillInForm заполнеят форму, resetForm очищает форму
 };
 
@@ -291,7 +331,7 @@ const init = async() => {
       
       const data = await getData();                               // [{},{},{}] коктейли с серевра.  Тк getData асинхроная фукния, пэтому она вернет промис. Чтобы плучить понятные  данные, ставим await
 
-      const cartsCocktail = data.map((coctailElem) => {           // coctailElem = { id, title, description, img, price, size }, map вернет массив [li, li, li]
+      const cartsCocktail = data.map((coctailElem) => {           // coctailElem = { id, title, description, img, price, size }, map вернет массив cartsCocktail =  [li, li, li]
                       
             const li = document.createElement('li');
             li.classList.add('goods__item');

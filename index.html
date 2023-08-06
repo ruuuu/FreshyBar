@@ -249,10 +249,11 @@
                         <h3 class="order__title make__title"> Собери <sup class="text-red">свой</sup> смузи </h3>
 
                         <form class="make__form  make__form--make-your-own">
+                              <input class="make__input-title"  type="text"  name="title">                 <!-- сами добавили поле, чтобы отправить название на серевр -->
                               <fieldset class="make__fieldset make__fieldset--ingredients">
                                     <label class="make__label checkbox">
                                           <input class="checkbox__input" type="checkbox" name="ingredients" value="Клубника">
-                                          Клубника    <!-- input обернули в label, чтобы при клике на текст, чекбокс  отмечался -->
+                                          Клубника                <!-- input обернули в label, чтобы при клике на текст, чекбокс  отмечался -->
                                     </label>
                                     <label class="make__label checkbox">
                                           <input class="checkbox__input" type="checkbox" name="ingredients" value="Киви">
@@ -321,7 +322,7 @@
                   <h3 class="order__title make__title"> Банановый смузи </h3>
 
                         <form class="make__form  make__form--add">
-                              <input class="make__input-title" type="hidden" name="title"> <!--это поле добавили чтобы  отрпавим на сервр -->
+                              <input class="make__input-title" type="hidden" name="title"> <!--сами добавили поле, чтобы  отрпавим на сервр -->
                               <div class="make__wrap-add"> 
                                     <fieldset class="make__fieldset make__fieldset--topping">
                                           <legend class="make__legend"> Дополнительно: </legend>
@@ -352,11 +353,11 @@
                               <div class="make__footer">
                                     <button class="btn make__add-btn" type="submit"> Добавить </button>
                                     <div class="make__total">
-                                          <input class="make__input-start-price" type="hidden">  <!-- это поле на сервер отправлять не будем -->
+                                          <input class="make__input-start-price" type="hidden">  <!-- сами добавили поле, это поле на сервер отправлять не будем -->
                                           <p class="text-red  make__total-price"> 340 Р </p>
-                                          <input class="make__input-price" type="hidden" name="price"> <!--это поле добавили чтобы  отрпавим на сервр -->
+                                          <input class="make__input-price" type="hidden" name="price"> <!--сами добавили поле, это поле добавили чтобы  отрпавим на сервр -->
                                           <p class="make__total-size"> 200мл </p>
-                                          <input class="make__input-size" type="hidden" name="size"> <!--это поле добавили чтобы отрпавим на сервр -->
+                                          <input class="make__input-size" type="hidden" name="size"> <!--сами добавили поле, это поле добавили чтобы отрпавим на сервр -->
                                     </div>
                               </div>
                         </form>
