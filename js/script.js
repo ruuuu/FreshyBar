@@ -19,7 +19,7 @@ const cartDataControl = {
       get(){
             return JSON.parse(localStorage.getItem('freshyBarCart') || '[]');  // из localStorage приходит данные в формает json, поэтому  их парсим для получения  удобочитаемого вида
       },
-      add(item){                                      // item={} коктейль
+      add(item){                                      // то что выбарли в форме Коструткор:  item={ ingredients: ['Клубника', 'Банан', 'Маракуйя'],   topping: ['Лед', 'Мята'],   cup: ['Пластиковый'],  price: "undefined" }
             const cartData = this.get();              // cartData = [ {}, {}, {} ]
             item.id =  Math.random().toString(36).substring(2, 8);    // придумываем и добавляем коктейлю id, выбирае из 36 символов, берем тлоько со 2 по 8 символ(то есть 6-ти значный id)
             cartData.push(item);                      // добавляем item  в  cartData
@@ -164,12 +164,15 @@ const modalControler = ( { modal, btnOpen, time = 300, open, close } ) => {  // 
 
       modalElem.addEventListener('click', closeModal);
 
+      modalElem.closeModal = closeModal;  // любой элемент на станице это объект, знаичт можно ему добавить свойстов
+      modalElem.openModal = openModal;
+
       return { openModal, closeModal };                     // возвзращаем объект(две функции) 
 };
 
 
 
-
+// чтоб ыполучить объект с выбранными полями формы:
 const getFormData = (form) => {
       const formData = new FormData(form);                  // конструктор  формы
       
@@ -228,6 +231,23 @@ const calculateTotalPrice = (form, startPrice) => {
 };
 
 
+
+const formControl = (form, cb) => {                   // передаем  коллбэк cb
+
+      form.addEventListener('submit', (evt) => {
+            evt.preventDefault();                     // отмена поведения по умолчанию(перезагрука страницы)
+            const data = getFormData(form);               // то, что выбрали в форме Конструктор: { ingredients: ['Клубника', 'Банан', 'Маракуйя'],  topping: ['Лед', 'Мята'],  cup: 'Пластиковый'/'Биоразлагаемый',  price: "230" }
+            // console.log('data from calculateTotalPrice ', data);
+            cartDataControl.add(data);                // добавляем то, что выбрали в форме Конструктор: { ingredients: ['Клубника', 'Банан', 'Маракуйя'],   topping: ['Лед', 'Мята'],   cup: ['Пластиковый'],  price: "230" }  в Корзину
+            if(cb){
+                  cb();
+            }
+
+      });   
+};
+
+
+
 // подсчет стоимости в форме Конструктор коктейля:
 const calculateMakeYourOwn = () => {
 
@@ -257,7 +277,9 @@ const calculateMakeYourOwn = () => {
 
       formMakeOwn.addEventListener('change',  handlerChange);           // собыие сработает, когда поставим/уберем чекбокс/радиобаттоны
       
-      //formControl(formMakeOwn);
+      formControl(formMakeOwn, ()=>{
+                  
+      });
       
       handlerChange();  // один раз надо вызвать функицю
 };
