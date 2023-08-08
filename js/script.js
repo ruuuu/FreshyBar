@@ -124,7 +124,7 @@ const modalControler = ( { modal, btnOpen, time = 300, open, close } ) => {  // 
       const closeModal = (evt) => {
 
             const code = evt.code;                                         // код клавиши на котрую нажали
-            if(evt.target === modalElem || code === 'Escape'){             // если нажали на модалку или клавишу Escape. evt.target- элемент на котрый нажали
+            if(evt.target === 'close' ||  evt.target === modalElem || code === 'Escape'){             // если нажали на модалку или клавишу Escape. evt.target- элемент на котрый нажали, evt.target === 'close' (можно любую строку передать), позволит закрыть окно
                   modalElem.style.opacity = 0;
                  
 
@@ -277,21 +277,31 @@ const calculateMakeYourOwn = () => {
 
       formMakeOwn.addEventListener('change',  handlerChange);           // собыие сработает, когда поставим/уберем чекбокс/радиобаттоны
       
-      formControl(formMakeOwn, ()=>{
-                  
+      formControl(formMakeOwn, () => {
+            modalMakeOwn.closeModal("close");  // в форме конструкртора коктлейля, при нажатии на Добавить, окно закроется
       });
       
+
       handlerChange();  // один раз надо вызвать функицю
+
+      const resetForm = ()=> {
+           
+            makeTotalPrice.textContent = '';
+            makeAddBtn.disabled = true;         // дизебйлим кнопку
+            formMakeOwn.reset();                // очищем форму
+      };
+
+      return { resetForm };
 };
 
 
 
 
-// подсчет стоиомости коктейля в Cart(не Корзина):
+// подсчет стоиомости коктейля в Cart(там поля Дополнительно и Стакан):
 const calculateAdd = () => {
     
-      const modalAdd = document.querySelector('.modal--add');  // модалка Cart
-      const formAdd = modalAdd.querySelector('.make__form--add');  // form Cart
+      const modalAdd = document.querySelector('.modal--add');  // модалка стоиомости коктейля (там поля Дополнительно и Стакан)
+      const formAdd = modalAdd.querySelector('.make__form--add');  // form стоиомости коктейля (там поля Дополнительно и Стакан)
       
       const makeTitle = modalAdd.querySelector('.make__title');
       const makeInputTitle = modalAdd.querySelector('.make__input-title');
@@ -311,6 +321,9 @@ const calculateAdd = () => {
       };
 
       formAdd.addEventListener('change', handlerChange);  // когда ставим/снимаем с чекбоков/радиобаттонов галочку, сработает событие 'change'
+      formControl(formAdd, () => {
+            modalAdd.closest('close');
+      });
 
       
 
@@ -346,10 +359,13 @@ const init = async() => {
 
       modalControler( { modal: '.modal__order',  btnOpen: '.header__btn-order' } );
      
-      calculateMakeYourOwn();
+      const { resetForm: resetFormMakeYourOwn } = calculateMakeYourOwn();
 
       const goodsListElem = document.querySelector('.goods__list');     // ul
 
+       // открытие модалки Конструтко коктейля:
+       modalControler( { modal: '.modal__make-your-own',   btnOpen: '.cocktail__btn--make',  close: resetFormMakeYourOwn }  );  // при нажатии на Добавить, вызвеотся resetFormcalMakeYourOwn 
+      
       
       const data = await getData();                               // [{},{},{}] коктейли с серевра.  Тк getData асинхроная фукния, пэтому она вернет промис. Чтобы плучить понятные  данные, ставим await
 
@@ -367,22 +383,20 @@ const init = async() => {
       
       console.log('cartsCocktail  ', cartsCocktail);              // [ li, li, li ]
 
-      const { fillInForm, resetForm } = calculateAdd();           // вернет объект(две фукнции): заполнения формы и очищение
+      const { fillInForm: fillInFormAdd, resetForm: resetFormAdd } = calculateAdd();           // вернет объект(две фукнции): заполнения формы и очищение
 
 
       goodsListElem.append(...cartsCocktail);                     // ... спред оператор
 
-      // открытие модалки Конструтко коктейля
-      modalControler( { modal: '.modal__make-your-own',  btnOpen: '.cocktail__btn--make' } );  // при нажатии на Добавить 
-      
-      // открыти емодаки Rорзина:
+     
+      // открыти модалки Корзина:
       modalControler( { modal: '.modal--add',  btnOpen: '.cocktail__btn--add', 
             open({ btn }){
                   const id = btn.dataset.id;                                        // получаем значение дата атрибута data-id у нажатой кнопки Добавить. Из дата-атрибута всегда приходит строка
                   const item = data.find((elem) => elem.id.toString() === id );                // перебираем товары с серевра, item = {} -товар
-                  fillInForm(item);                                                 // заполняем форму
+                  fillInFormAdd(item);                                                 // заполняем форму
             }, 
-            close: resetForm                                                        // очищаем форму
+            close: resetFormAdd                                                        // очищаем форму, скобки не ставим
        } );  
      
 };
