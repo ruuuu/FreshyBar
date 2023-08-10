@@ -68,7 +68,7 @@ const createCard = (cocktailItem) => {
                         <h3 class="cocktail__title">${cocktailItem.title}</h3>
                         <p class="cocktail__price text-red"> ${cocktailItem.price} Р</p>
                   </div>
-                  <p class="cocktail__size">${cocktailItem.size} мл</p>
+                  <p class="cocktail__size">${cocktailItem.size} </p>
                   <button class="btn cocktail__btn cocktail__btn--add"  data-id="${cocktailItem.id}">Добавить</button>
             </div>
       `;
@@ -121,18 +121,17 @@ const modalControler = ( { modal, btnOpen, time = 300, open, close } ) => {  // 
 
 
     
-      const closeModal = (evt) => {
+      const closeModal = (evt) => {  
 
             const code = evt.code;                                         // код клавиши на котрую нажали
-            if(evt.target === 'close' ||  evt.target === modalElem || code === 'Escape'){             // если нажали на модалку или клавишу Escape. evt.target- элемент на котрый нажали, evt.target === 'close' (можно любую строку передать), позволит закрыть окно
+            if(evt === "close" ||  evt.target === modalElem || code === 'Escape'){             // если нажали на модалку или клавишу Escape. evt.target- элемент на котрый нажали, evt.target === 'close' (можно любую строку передать), позволит закрыть окно
                   modalElem.style.opacity = 0;
                  
-
                   setTimeout(() => {                                     // переданная фукнуия вызовется через вреям time
                         modalElem.style.visibility = 'hidden';           // модала исчезнет
                         scrollService.enabledScroll();
                         if(close){                                       // если есть фукнуия close
-                              close();
+                              close();                                   // вызов фукнции close()
                         }
                   }, time);
             }
@@ -150,7 +149,7 @@ const modalControler = ( { modal, btnOpen, time = 300, open, close } ) => {  // 
             modalElem.style.visibility = 'visible';
             modalElem.style.opacity = 1;
 
-            window.addEventListener('keydown', closeModal);  // при нажати  на клавишу keydown
+            window.addEventListener('keydown', closeModal);                   // при нажати  на клавишу keydown
             scrollService.disableScroll();
       };
 
@@ -161,7 +160,6 @@ const modalControler = ( { modal, btnOpen, time = 300, open, close } ) => {  // 
       });
       
      
-
       modalElem.addEventListener('click', closeModal);
 
       modalElem.closeModal = closeModal;  // любой элемент на станице это объект, знаичт можно ему добавить свойстов
@@ -172,7 +170,7 @@ const modalControler = ( { modal, btnOpen, time = 300, open, close } ) => {  // 
 
 
 
-// чтоб ыполучить объект с выбранными полями формы:
+// чтобы получить объект с выбранными полями формы:
 const getFormData = (form) => {
       const formData = new FormData(form);                  // конструктор  формы
       
@@ -236,11 +234,13 @@ const formControl = (form, cb) => {                   // передаем  ко�
 
       form.addEventListener('submit', (evt) => {
             evt.preventDefault();                     // отмена поведения по умолчанию(перезагрука страницы)
+            
             const data = getFormData(form);               // то, что выбрали в форме Конструктор: { ingredients: ['Клубника', 'Банан', 'Маракуйя'],  topping: ['Лед', 'Мята'],  cup: 'Пластиковый'/'Биоразлагаемый',  price: "230" }
             // console.log('data from calculateTotalPrice ', data);
-            cartDataControl.add(data);                // добавляем то, что выбрали в форме Конструктор: { ingredients: ['Клубника', 'Банан', 'Маракуйя'],   topping: ['Лед', 'Мята'],   cup: ['Пластиковый'],  price: "230" }  в Корзину
+            cartDataControl.add(data);                // добавляем то, что выбрали в форме Конструктор: { ingredients: ['Клубника', 'Банан', 'Маракуйя'],   topping: ['Лед', 'Мята'],   cup: ['Пластиковый'],  price: "230" }  в Корзину(в лок хранилище)
+            
             if(cb){
-                  cb();
+                  cb();                               // modalMakeOwn.closeModal("close");   
             }
 
       });   
@@ -252,7 +252,7 @@ const formControl = (form, cb) => {                   // передаем  ко�
 const calculateMakeYourOwn = () => {
 
       const modalMakeOwn = document.querySelector('.modal__make-your-own');  // модалка
-      const formMakeOwn =  modalMakeOwn.querySelector('.make__form--make-your-own'); // form Consructor коктейля,
+      const formMakeOwn =  modalMakeOwn.querySelector('.make__form--make-your-own'); // form Consructor коктейля
       const makeInputPrice = formMakeOwn.querySelector('.make__input--price');  // input
       const makeTotalPrice = formMakeOwn.querySelector('.make__total-price');
       const makeAddBtn = modalMakeOwn.querySelector('.make__add-btn');  //  кнпока Добавить в форме
@@ -278,10 +278,9 @@ const calculateMakeYourOwn = () => {
       formMakeOwn.addEventListener('change',  handlerChange);           // собыие сработает, когда поставим/уберем чекбокс/радиобаттоны
       
       formControl(formMakeOwn, () => {
-            modalMakeOwn.closeModal("close");  // в форме конструкртора коктлейля, при нажатии на Добавить, окно закроется
+            modalMakeOwn.closeModal("close");                            // в форме конструкртора коктлейля, при нажатии на Добавить, окно закроется
       });
       
-
       handlerChange();  // один раз надо вызвать функицю
 
       const resetForm = ()=> {
@@ -317,12 +316,13 @@ const calculateAdd = () => {
            const totaPrice =  calculateTotalPrice(formAdd, +makeInputStartPrice.value);   // к полям формы можно обратися как: форма.input.name, +formAdd.price.value переводит из строки в число   
            makeTotalPrice.innerHTML = `${totaPrice}&nbsp;Р`;
            makeInputPrice.value = totaPrice;
-      
       };
 
-      formAdd.addEventListener('change', handlerChange);  // когда ставим/снимаем с чекбоков/радиобаттонов галочку, сработает событие 'change'
+
+      formAdd.addEventListener("change", handlerChange);  // когда ставим/снимаем с чекбоков/радиобаттонов галочку, сработает событие 'change'
+      
       formControl(formAdd, () => {
-            modalAdd.closest('close');
+            modalAdd.closeModal("close");
       });
 
       
@@ -344,7 +344,7 @@ const calculateAdd = () => {
             makeTitle.textContent = '';
             makeTotalPrice.textContent = '';
             makeTotalSize.textContent = '';
-            formAdd.reset();  // очищем форму
+            formAdd.reset();                    // очищем форму
       };
 
 
@@ -353,20 +353,69 @@ const calculateAdd = () => {
 
 
 
+// отрисовка заказа в корзине:
+const createCartItem = (item) => {  // item заказ
+     
+     const li = document.createElement('li');
+     li.classList.add('order__item');
+     li.innerHTML = `
+            <img class="order__img" src="img/6.jpg" alt="${item.title}">
+            <div class="order__info">
+                  <h3 class="order__name"> ${item.title} </h3>
+                  <ul class="order__topping-list">
+                        <li class="order__topping-item"> ${item.size}  </li>
+                        <li class="order__topping-item"> ${item.cup ? item.cup : ""} </li>            <!-- если item.cup есть, то отобразим иначе пусто -->
+                        ${item.topping ?
+                                (Array.isArray(item.topping) ? item.topping.map((toppingItem) => `<li class="order__topping-item">${toppingItem}</li>`)  
+                                :  `<li class="order__topping-item"> ${item.topping} </li>`)
+                                :   ""  }
+                  </ul>
+            </div>
+
+            <button class="order__item-delete" aria-label="Удалить заказ из корзины" data-id="${item.id}"></button>    <!-- data-id добавили  чтобы удалять заказ по его id -->
+            <p class="order__item-price"> ${item.price}&nbsp;Р </p>
+     `;
+
+     return li; 
+};
+
+
+
+// отрисовка корзины
+const renderCart  = () => {
+      const modalOrder = document.querySelector('.modal__order');
+     
+      const orderCount = modalOrder.querySelector('.order__count');
+      const orderList = modalOrder.querySelector('.order__list');
+      const orderTotalPrice = modalOrder.querySelector('.order__total-price');
+      const orderForm = modalOrder.querySelector('.order__form');
+      
+      const orderListData = cartDataControl.get();                // [{},{},{}]   данные из localStorage -массив заказов
+      orderList.textContent = '';                                // перед заполнением контенйер очищаем
+      orderCount.textContent = `(${orderListData.length})`;
+
+      orderListData.forEach((item) => {  // item заказ { cup: "Биоразлагаемый", id:  "55fc7c", ingredients:  ["Киви", "Банан"],  price: "290",  title: "Конструктор: Киви, Банан",  topping: "Лед" }
+            
+            orderList.append(createCartItem(item));
+      });
+
+
+      orderTotalPrice.textContent = `${orderListData.reduce((acc, item)=> +item.price + acc, 0)} Р`;  // суммирует по полю item.price
+};
+
 
 
 const init = async() => {
 
-      modalControler( { modal: '.modal__order',  btnOpen: '.header__btn-order' } );
+      modalControler( { modal: '.modal__order',  btnOpen: '.header__btn-order', open: renderCart, } );  //  модалка Корзины: пред октрытием корзины, будет выызваться фукнция renderCart
      
       const { resetForm: resetFormMakeYourOwn } = calculateMakeYourOwn();
 
+    
+      // открытие модалки Конструтко коктейля:
+      modalControler( { modal: '.modal__make-your-own',   btnOpen: '.cocktail__btn--make',  close: resetFormMakeYourOwn, }  );  // при нажатии на Добавить в форме конутрктор коктейля, вызвеотся resetFormcalMakeYourOwn 
+      
       const goodsListElem = document.querySelector('.goods__list');     // ul
-
-       // открытие модалки Конструтко коктейля:
-       modalControler( { modal: '.modal__make-your-own',   btnOpen: '.cocktail__btn--make',  close: resetFormMakeYourOwn }  );  // при нажатии на Добавить, вызвеотся resetFormcalMakeYourOwn 
-      
-      
       const data = await getData();                               // [{},{},{}] коктейли с серевра.  Тк getData асинхроная фукния, пэтому она вернет промис. Чтобы плучить понятные  данные, ставим await
 
       const cartsCocktail = data.map((coctailElem) => {           // coctailElem = { id, title, description, img, price, size }, map вернет массив cartsCocktail =  [li, li, li]
@@ -379,21 +428,21 @@ const init = async() => {
 
             return li;  // <li> ... </li>
       });
-      
-      
-      console.log('cartsCocktail  ', cartsCocktail);              // [ li, li, li ]
+
+      goodsListElem.append(...cartsCocktail);                     // ... спред оператор
+      // console.log('cartsCocktail  ', cartsCocktail);              // [ li, li, li ]
+
 
       const { fillInForm: fillInFormAdd, resetForm: resetFormAdd } = calculateAdd();           // вернет объект(две фукнции): заполнения формы и очищение
 
 
-      goodsListElem.append(...cartsCocktail);                     // ... спред оператор
-
+     
      
       // открыти модалки Корзина:
       modalControler( { modal: '.modal--add',  btnOpen: '.cocktail__btn--add', 
             open({ btn }){
                   const id = btn.dataset.id;                                        // получаем значение дата атрибута data-id у нажатой кнопки Добавить. Из дата-атрибута всегда приходит строка
-                  const item = data.find((elem) => elem.id.toString() === id );                // перебираем товары с серевра, item = {} -товар
+                  const item = data.find((elem) => elem.id.toString() === id);                // перебираем товары с серевра, item = {} -товар
                   fillInFormAdd(item);                                                 // заполняем форму
             }, 
             close: resetFormAdd                                                        // очищаем форму, скобки не ставим

@@ -179,14 +179,14 @@
       </footer>
 
 
- <!-- МОДАЛКИ:  -->
+ <!-- МОДАЛКИ:  Корзина  -->
       <div class="modal modal__order">  <!-- оверлей -->
             <div class="modal__main modal__main--order">  <!-- модалка Корзина  находится в центер и скроллится -->
                   <div class="order">  <!-- мод окно Заказать -->
                         <h2 class="order__title"> Корзина <sup class="text-red order__count">2</sup> </h2>
 
                         <ul class="order__list">
-                              <li class="order__item">
+                              <!-- <li class="order__item">
                                     <img class="order__img" src="img/6.jpg" alt="">
                                     <div class="order__info">
                                           <h3 class="order__name">Манго смузи</h3>
@@ -200,9 +200,9 @@
 
                                     <button class="order__item-delete" aria-label="Удалить заказ из корзины"></button>
                                     <p class="order__item-price">345&nbsp;Р</p>
-                              </li>
+                              </li> -->
 
-                              <li class="order__item">
+                              <!-- <li class="order__item">
                                     <img class="order__img" src="img/6.jpg" alt="">
                                     <div class="order__info">
                                           <h3 class="order__name">Манго смузи</h3>
@@ -216,7 +216,7 @@
 
                                     <button class="order__item-delete" aria-label="Удалить заказ из корзины"></button>
                                     <p class="order__item-price">345&nbsp;Р</p>
-                              </li>
+                              </li> -->
                         </ul>
 
 
@@ -304,8 +304,9 @@
                               <div class="make__footer">
                                     <button class="btn make__add-btn" type="submit"> Добавить </button>
                                     <div class="make__total">
-                                          <input class="make__input make__input--price" type="hidden" name="price" value="150"> <!-- добавили скрытое поле для вывода цены -->
+                                          <input class="make__input make__input--price" type="hidden" name="price" value="150"> <!-- добавили скрытое поле для отправки цены  на сервер -->
                                           <p class="text-red  make__total-price"> 150 Р </p>
+                                          <input class="make__input make__input--size" type="hidden" name="size" value="200"> <!-- добавили скрытое поле для отправки размера  на сервер -->
                                           <p class="make__total-size"> 200мл </p>
                                     </div> 
                               </div>
