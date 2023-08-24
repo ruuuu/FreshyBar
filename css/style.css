@@ -122,7 +122,7 @@ h1, h2, h3, p, fieldset{
 
 /* header */
 .header {
-      padding: 32px 0;
+      padding: 36px 0;
 }
 
 .header__container{
@@ -144,6 +144,8 @@ h1, h2, h3, p, fieldset{
 
 
 .header__btn-order {
+      width: 24px;
+      height: 24px;
 }
 
 
@@ -155,8 +157,13 @@ h1, h2, h3, p, fieldset{
 /* hero */
 .hero {
       padding: 30px 0 85px 0;
-
 }
+
+
+.hero__container{
+      position: relative;
+}
+
 
 .hero__title {
       max-width: 880px;
@@ -168,23 +175,24 @@ h1, h2, h3, p, fieldset{
 .hero__cups {
       display: flex;
       gap: 20px;
-      align-items: center;
+      align-items: flex-end;
       padding-top: 200px;
 }
 
 .hero__cup {
       position: relative;
-      width: 380px;
-      height: 382px;
+      width: 100%;
+      aspect-ratio: 1/1; /* соотношение сторон, чтобы получить квадрат */
       border-radius: 24px;
 }
 
 
 .hero__img {
       position: absolute;
-      bottom: 50px;
+      bottom: 13%; /* 50px(padding-bottom ) / 380px(ширина квадрата) */
       left: 50%;
       transform: translateX(-50%); /*  translateX сдвигает по горизонлаи, в нашем случае влево.  */
+      width: 55%;  /* 210px(ширина стакана) / 380px(ширина квадрата) */
 }
 
 
@@ -196,6 +204,7 @@ h1, h2, h3, p, fieldset{
 .hero__cup--yellow {
       background-color: #FFB72A;
       margin-top: -70px;
+      align-self: flex-start;  /* выравнивает вдоль поперечной оси */
 }
 
 
@@ -203,6 +212,84 @@ h1, h2, h3, p, fieldset{
       background-color:#34B905; 
 }
 
+
+.decor{
+      position: absolute;
+      /* расятянется на всю ширину с inset:0 : */
+      top:0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+}
+
+
+.decor__img{
+      position: absolute;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100%;
+}
+
+
+.decor__img--01{
+      width: 223px;
+      height: 214px;
+      filter: drop-shadow(0px 10px 30px  rgba(164, 7, 2, 0.50));
+      background-image: url('../img/berry1.png');
+      top: 19%;
+      left: -6%;
+}
+
+
+.decor__img--02{
+      width: 180px;
+      height: 147px;
+      filter: drop-shadow(0px 4px 20px  rgba(17, 7, 108, 0.50));
+      background-image: url('../img/berry2.png');
+      right: 6%;
+      top: 10%;
+}
+
+
+.decor__img--03{
+      width: 46px;
+      height: 41px;
+      filter: drop-shadow(0px 4px 20px  rgba(223, 97, 15, 0.40));
+      background-image: url('../img/berry3.png');
+      bottom: 46%;
+      left: 36%;
+}
+
+
+.decor__img--04{
+      width: 109px;
+      height: 114px;
+      filter: drop-shadow(0px 10px 30px  rgba(164, 7, 2, 0.50));
+      background-image: url('../img/berry4.png');
+      top: 34%;
+      right: 1%;
+}
+
+
+.decor__img--05{   /* черника */
+      width: 109px;
+      height: 114px;
+      filter: drop-shadow(0px 4px 20px  rgba(1, 30, 82, 0.50));
+      background-image: url('../img/berry5.png');
+      bottom: -5%;
+      left: 10%;
+}
+
+
+.decor__img--06{
+      width: 46px;
+      height: 41px;
+      filter: drop-shadow(0px 4px 20px  rgba(223, 97, 15, 0.40));
+      background-image: url('../img/berry6.png');
+      bottom: -43%;
+      left: 27%;
+}
 
 /*goods*/
 
@@ -220,7 +307,8 @@ h1, h2, h3, p, fieldset{
 
 .goods__list{
       display: grid;
-      grid-template-columns: repeat(4, 280px);
+      grid-template-columns: repeat(4, 280px); 
+     
       gap: 20px;
 }
 
@@ -229,6 +317,7 @@ h1, h2, h3, p, fieldset{
      
 
 }
+
 
 .goods__card {
       padding: 12px;
@@ -242,7 +331,6 @@ h1, h2, h3, p, fieldset{
       flex-direction: column;
       gap: 13px;
       height: 100%;
-
 }
 
 
@@ -263,35 +351,37 @@ h1, h2, h3, p, fieldset{
 
 
 .cocktail__text {
-      display: grid;
-      grid-template-columns: 3fr 1fr;
-     
-     
-      margin-bottom: 2px;
+      /* display: grid;
+      grid-template-columns: 3fr 1fr; */
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 2px 5px;
+      margin-bottom: 10px;
 }
 
 
-.cocktail__title {
-      grid-row: 1/3;
-      margin-right: 5px;
-      font-size: 18px;
+.cocktail__title { /* грид элемент */
+      /* grid-row: 1/3; */
+      font-size: inherit;  /* наследует шрифт от своего родителя */
       font-weight: 400;
 }
 
 
 .cocktail__price {
-      grid-column: 2/3;
+      /* grid-column: 2/3; */
       font-weight: 600;
 }
 
 
 .cocktail__size {  
       /* flex: 0 0 100%; */
-      /* flex-grow: 0;  если будет свободное пространство, то элемнет не увеличится */
-      /* flex-shrink: 0;   если не будет свободного пространства, то элемнет не сожмется */
+      flex-grow: 0;  /* если будет свободное пространство, то элемнет не увеличится */
+      flex-shrink: 0;   /* если не будет свободного пространства, то элемнет не сожмется */
       flex-basis: 100%;
-     
-      margin-left: auto; /* флекс элемент прижмется в право либо align-self: flex-end (вдоль поперечнной оси) */
+      /* margin-left: auto; флекс элемент прижмется в право, либо align-self: flex-end (вдоль поперечнной оси) */
+      text-align: end;
       font-size: 12px;
       font-weight: 600;
       color: #C1C1C1;
@@ -303,6 +393,7 @@ h1, h2, h3, p, fieldset{
       margin-top: auto;  /* флекс элемнт прижмется к низу */
       font-weight: 600;
 }
+
 
 .cocktail__btn--make{
 
@@ -347,6 +438,7 @@ h1, h2, h3, p, fieldset{
       display: flex;
       flex-direction: column;
       gap: 10px;
+      min-width: 230px;
 }
 
 
@@ -386,9 +478,6 @@ h1, h2, h3, p, fieldset{
 .modal__main--order{
       max-width: 780px; /* из макета */
 }
-
-
-
 
 
 .order {
@@ -444,6 +533,7 @@ h1, h2, h3, p, fieldset{
 .order__info {
       grid-area: info;
 }
+
 
 .order__name {
       margin-bottom: 8px;
@@ -619,9 +709,6 @@ h1, h2, h3, p, fieldset{
 }
 
 
-
-
-
 .make__fieldset--topping {
      display: flex;
      flex-direction: column;
@@ -669,7 +756,6 @@ h1, h2, h3, p, fieldset{
       font-size: 12px;
       color: #D5B4A8;   
 }
-
 
 
 .checkbox { /* label */
@@ -722,7 +808,6 @@ h1, h2, h3, p, fieldset{
 } 
    
 
-
 .checkbox__input:checked::after{  /* нажатая галочка */
       opacity: 1;       /* галочка отображается */
 }
@@ -756,3 +841,236 @@ h1, h2, h3, p, fieldset{
 .radio__input {
       }
 
+
+/* laptop */
+@media (max-width: 1240px){  /* 1240 = 1180px(container) + 2*30px(padding) */
+
+      body{
+            background-image: url("../img/bg-laptop.svg");
+      }
+
+      .container{
+            --width: 880px; 
+      }
+
+      .hero {
+            padding-bottom: 30px;
+      }
+
+      .hero__title {
+            max-width: 680px;
+            font-size: 64px;
+      }
+
+      .hero__cups{
+            padding-top: 216px;
+      }
+
+      .hero__cup--yellow {
+            margin-top: -50px;
+      }
+
+      .goods__list{
+            grid-template-columns: repeat(3, 280px);
+      }   
+}
+
+
+/* tablet */
+@media (max-width: 940px){   /* 940 = 880px(container) + 2*30px(padding) */
+      body{
+            background-image: url("../img/bg-tablet.svg");
+            font-size: 14px;
+      }
+
+      .container{
+            --width: 608px; 
+            --padding: 15px;
+      }
+
+
+      .header{
+            padding-top: 34px;
+            padding-bottom: 20px;
+      }
+
+      .header__btns{
+            gap: 24px;
+      }
+
+      .header__btn{
+            padding: 8px 20px;
+            box-shadow: 0px 2px 10px 0px #FA5A5A;
+      }
+
+      .hero {
+            padding-bottom: 30px;
+      }
+
+      .hero__title {
+            max-width: 468px;
+            font-size: 44px;
+      }
+
+      .hero__cups{
+            padding-top: 216px;
+            gap: 13px;  
+      }
+
+
+      .hero__cup{
+            border-radius: 12px;
+      }
+
+      .hero__cup--yellow {
+            margin-top: -50px;
+      }
+
+
+      .hero__img {
+            bottom: 12%; /* 25px(padding-bottom ) / 194px(ширина квадрата) */
+            width: 54%;  /* 107px(ширина стакана) / 194px(ширина квадрата) */
+      }
+
+      .goods{
+            padding-top: 40px;
+            padding-bottom: 50px;
+      }
+      
+
+      .goods__title{
+            font-size: 24px;
+            margin-bottom: 16px;
+      }
+
+      .goods__list{
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));   /* repeat(4, 140px); */
+            gap: 16px;
+      }   
+
+      .goods__card {
+            padding: 8px;
+            border-radius: 12px;
+      }
+      
+      
+      .cocktail {
+            gap: 8px;  
+      }
+      
+      
+      .cocktail__img {
+            border-radius: 12px;
+            margin-bottom: 8px;
+      }
+      
+      
+      .cocktail__content { 
+            padding: 0; 
+      }
+      
+      
+      .cocktail__text {
+            row-gap: 8px;
+            margin-bottom: 0;
+      }
+      
+      
+      .cocktail__title { 
+            flex-grow: 1;  /* если есть место, то элемент расширяется */
+            flex-shrink: 0;  
+            flex-basis: 100%;
+            font-size: inherit;  /* наследует шрифт от своего родителя */
+            margin-bottom: 0;
+      }
+      
+      
+      .cocktail__price {
+            font-weight: 600;
+            font-size: 14px;
+      }
+      
+      
+      .cocktail__size {  
+            font-size: 10px;
+            margin-bottom: 0;
+            flex-grow: auto;  /*  если есть место, то элемент не увеличивается */
+            flex-shrink: auto;  /* если нет место, то элемент сжимается */
+            flex-basis: auto;
+      }
+      
+      .footer{
+            padding-bottom: 24px;
+      }
+      
+      .footer__container{
+            gap: 24px;
+      }
+}
+
+
+/* mobile */
+@media (max-width: 640px){
+
+      body{
+            background-image: url('../img/bg-mobile.svg');
+
+      }
+
+      .header{
+            padding: 30px 0;
+      }
+
+      .header__btn{
+            display: none;
+      }
+
+      .hero{
+            padding-top: 0;
+            padding-bottom: 120px;
+      }
+
+      .hero__logo{
+            width: 120px;
+            height: 22px;
+      }
+
+      .header__btn-order{
+            margin-right: 0;
+      }
+
+      .hero__title{
+           
+            font-size: 36px;
+      }
+
+
+      .hero__cups{
+            display: none;
+      }
+
+      .goods{
+            padding: 40px 0 30px 0;
+      }
+
+      .goods__list{
+            gap: 10px; 
+      }
+
+      .footer__container{
+            grid-template-areas: 'logo'
+                                 'copyright'
+                                 'developer';
+            gap: 20px;                     
+      }
+
+     .footer__logo{
+            width: 120px;
+     }
+
+     .footer__developer{
+            justify-self: flex-start;
+            display: block;
+            gap: 6px;    
+     }
+}

@@ -12,8 +12,9 @@
       <link rel="stylesheet" href="css/style.css">
       <script src="js/script.js" defer></script><!-- defer: во время загрукзи скрипта, разметка считывается, после того как скрипт загурзится, он запустится тлько тогда, когда вся разметка считается-->
 </head>
-<body>
 
+
+<body>
       <header class="header">
             <div class="container header__container">
                   <img class="header__logo" src="img/logo.svg" alt="Логотип FreshyBar">
@@ -30,7 +31,7 @@
 
       <main>
             <section class="hero">
-                  <div class="container">
+                  <div class="container hero__container">
                         <h2 class="hero__title"> Выбери свой  <span class="text-red">освежающий</span> фреш</h2>   
                         <div class="hero__cups">
                              <div class="hero__cup hero__cup--pink">
@@ -42,6 +43,15 @@
                              <div class="hero__cup hero__cup--green">
                                     <img class="hero__img" src="img/orange.png" alt="Стакан с оранжевым соком">
                              </div> 
+                        </div>
+            
+                        <div class="decor">
+                              <div class="decor__img decor__img--01"></div>
+                              <div class="decor__img decor__img--02"></div>
+                              <div class="decor__img decor__img--03"></div>
+                              <div class="decor__img decor__img--04"></div>
+                              <div class="decor__img decor__img--05"></div>
+                              <div class="decor__img decor__img--06"></div>
                         </div>
                   </div>
             </section>
@@ -58,8 +68,9 @@
                                                 <div class="cocktail__text">
                                                       <h3 class="cocktail__title">Собери сам</h3>
                                                       <p class="cocktail__price text-red"> 260 Р</p>
+                                                      <p class="cocktail__size">300 мл</p>
                                                 </div>
-                                                <p class="cocktail__size">300 мл</p>
+                                               
                                                 <button class="btn cocktail__btn cocktail__btn--make">Добавить</button>
                                           </div>
                                     </article>
@@ -72,8 +83,9 @@
                                                 <div class="cocktail__text">
                                                       <h3 class="cocktail__title">Клубника</h3>
                                                       <p class="cocktail__price text-red"> 270 Р</p>
+                                                      <p class="cocktail__size">300 мл</p>
                                                 </div>
-                                                <p class="cocktail__size">300 мл</p>
+                                               
                                                 <button class="btn cocktail__btn">Добавить</button>
                                           </div>
                                     </article>
@@ -86,8 +98,8 @@
                                                 <div class="cocktail__text">
                                                       <h3 class="cocktail__title">Лесные ягоды</h3>
                                                       <p class="cocktail__price"> 280 Р</p>
+                                                      <p class="cocktail__size">300 мл</p>
                                                 </div>
-                                                <p class="cocktail__size">300 мл</p>
                                                 <button class="btn cocktail__btn">Добавить</button>
                                          </div>
                                     </article>
@@ -100,8 +112,8 @@
                                                 <div class="cocktail__text">
                                                       <h3 class="cocktail__title">Лайм и мята</h3>
                                                       <p class="cocktail__price text-red"> 260 Р</p>
+                                                      <p class="cocktail__size">300 мл</p>
                                                 </div>
-                                                <p class="cocktail__size">300 мл</p>
                                                 <button class="btn cocktail__btn">Добавить</button>
                                           </div>
                                     </article>
@@ -114,8 +126,8 @@
                                                 <div class="cocktail__text">
                                                       <h3 class="cocktail__title">Банан</h3>
                                                       <p class="cocktail__price text-red"> 260 Р</p>
+                                                      <p class="cocktail__size">300 мл</p>
                                                 </div>
-                                                <p class="cocktail__size">300 мл</p>
                                                 <button class="btn cocktail__btn">Добавить</button>
                                           </div>
                                     </article>
@@ -128,8 +140,8 @@
                                                 <div class="cocktail__text">
                                                       <h3 class="cocktail__title">Киви и яблоко</h3>
                                                       <p class="cocktail__price text-red"> 290 Р</p>
+                                                      <p class="cocktail__size">300 мл</p>
                                                 </div>
-                                                <p class="cocktail__size">300 мл</p>
                                                 <button class="btn cocktail__btn">Добавить</button>
                                           </div>
                                     </article>
@@ -142,8 +154,8 @@
                                                 <div class="cocktail__text">
                                                       <h3 class="cocktail__title">Манго</h3>
                                                       <p class="cocktail__price text-red"> 380 Р</p>
+                                                      <p class="cocktail__size">300 мл</p>
                                                 </div>
-                                                <p class="cocktail__size">300 мл</p>
                                                 <button class="btn cocktail__btn">Добавить</button>
                                           </div>
                                     </article>
@@ -156,8 +168,8 @@
                                                 <div class="cocktail__text">
                                                       <h3 class="cocktail__title">Маракуйя</h3>
                                                       <p class="cocktail__price text-red"> 340 Р</p>
+                                                      <p class="cocktail__size">300 мл</p>
                                                 </div>
-                                                <p class="cocktail__size">300 мл</p>
                                                 <button class="btn cocktail__btn">Добавить</button>
                                           </div>
                                     </article>
@@ -228,11 +240,11 @@
 
                         <form class="order__form">
                               <label class="order__label">
-                                    <input class="order__input" type="text" placeholder="Ваше имя">
+                                    <input class="order__input" type="text" name="name" placeholder="Ваше имя" required>
                               </label>
 
                               <label class="order__label">
-                                    <input class="order__input" type="text" placeholder="Ваш телефон">
+                                    <input class="order__input" type="text" name="phone" placeholder="Ваш телефон" required>
                               </label>
 
                               <button class="btn order__submit">Заказать</button>
@@ -345,7 +357,7 @@
                                                 Биоразлагаемый <span class="make__upsale">(+10 Р)</span>
                                           </label>
                                           <label class="make__label radio">
-                                                <input class="radio__input" type="radio" name="topping" value="Пластиковый" checked><!-- checked ыто есть  выбан по учмрланчию -->
+                                                <input class="radio__input" type="radio" name="topping" value="Пластиковый"><!-- checked ыто есть  выбан по учмрланчию -->
                                                 Пластиковый <span class="make__upsale">(+0 Р)</span>
                                           </label>
                                     </fieldset>

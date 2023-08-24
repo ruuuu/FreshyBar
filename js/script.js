@@ -55,7 +55,7 @@ const getData = async () => {    // тк внутри фукнции есть aw
 };
 
 
-
+// отрисовка ккрточки коктейля:
 const createCard = (cocktailItem) => {
 
       const cocktail = document.createElement('article');
@@ -67,8 +67,8 @@ const createCard = (cocktailItem) => {
                   <div class="cocktail__text">
                         <h3 class="cocktail__title">${cocktailItem.title}</h3>
                         <p class="cocktail__price text-red"> ${cocktailItem.price} Р</p>
+                        <p class="cocktail__size">${cocktailItem.size} </p>
                   </div>
-                  <p class="cocktail__size">${cocktailItem.size} </p>
                   <button class="btn cocktail__btn cocktail__btn--add"  data-id="${cocktailItem.id}">Добавить</button>
             </div>
       `;
@@ -121,7 +121,7 @@ const modalControler = ( { modal, btnOpen, time = 300, open, close } ) => {  // 
 
 
     
-      const closeModal = (evt) => {  
+      const closeModal = (evt) => {
 
             const code = evt.code;                                         // код клавиши на котрую нажали
             if(evt === "close" ||  evt.target === modalElem || code === 'Escape'){             // если нажали на модалку или клавишу Escape. evt.target- элемент на котрый нажали, evt.target === 'close' (можно любую строку передать), позволит закрыть окно
@@ -170,7 +170,7 @@ const modalControler = ( { modal, btnOpen, time = 300, open, close } ) => {  // 
 
 
 
-// чтобы получить объект с выбранными полями формы:
+// получение объекта(его будем отправлять на сервер) с заполненными полями формы:
 const getFormData = (form) => {
       const formData = new FormData(form);                  // конструктор  формы
       
@@ -235,7 +235,7 @@ const formControl = (form, cb) => {                   // передаем  ко�
       form.addEventListener('submit', (evt) => {
             evt.preventDefault();                     // отмена поведения по умолчанию(перезагрука страницы)
             
-            const data = getFormData(form);               // то, что выбрали в форме Конструктор: { ingredients: ['Клубника', 'Банан', 'Маракуйя'],  topping: ['Лед', 'Мята'],  cup: 'Пластиковый'/'Биоразлагаемый',  price: "230" }
+            const data = getFormData(form);               // то, что выбрали в форме Конструктор коктейля: { ingredients: ['Клубника', 'Банан', 'Маракуйя'],  topping: ['Лед', 'Мята'],  cup: 'Пластиковый'/'Биоразлагаемый',  price: "230" }
             // console.log('data from calculateTotalPrice ', data);
             cartDataControl.add(data);                // добавляем то, что выбрали в форме Конструктор: { ingredients: ['Клубника', 'Банан', 'Маракуйя'],   topping: ['Лед', 'Мята'],   cup: ['Пластиковый'],  price: "230" }  в Корзину(в лок хранилище)
             
@@ -299,8 +299,8 @@ const calculateMakeYourOwn = () => {
 // подсчет стоиомости коктейля в Cart(там поля Дополнительно и Стакан):
 const calculateAdd = () => {
     
-      const modalAdd = document.querySelector('.modal--add');  // модалка стоиомости коктейля (там поля Дополнительно и Стакан)
-      const formAdd = modalAdd.querySelector('.make__form--add');  // form стоиомости коктейля (там поля Дополнительно и Стакан)
+      const modalAdd = document.querySelector('.modal--add');                             // модалка стоиомости коктейля (там поля Дополнительно и Стакан)
+      const formAdd = modalAdd.querySelector('.make__form--add');                         // form стоиомости коктейля (там поля Дополнительно и Стакан)
       
       const makeTitle = modalAdd.querySelector('.make__title');
       const makeInputTitle = modalAdd.querySelector('.make__input-title');
@@ -309,8 +309,9 @@ const calculateAdd = () => {
       const makeInputPrice = modalAdd.querySelector('.make__input-price');   // input
       const makeTotalSize = modalAdd.querySelector('.make__total-size');
       const makeInputSize = modalAdd.querySelector('.make__input-size');
+      const btnAdd = modalAdd.querySelector('.make__add-btn');
 
-      
+
 
       const handlerChange  = () => {
            const totaPrice =  calculateTotalPrice(formAdd, +makeInputStartPrice.value);   // к полям формы можно обратися как: форма.input.name, +formAdd.price.value переводит из строки в число   
@@ -344,6 +345,7 @@ const calculateAdd = () => {
             makeTitle.textContent = '';
             makeTotalPrice.textContent = '';
             makeTotalSize.textContent = '';
+            btnAdd.disabled = true;         // дизебйлим кнопку
             formAdd.reset();                    // очищем форму
       };
 
@@ -354,26 +356,23 @@ const calculateAdd = () => {
 
 
 // отрисовка заказа в корзине:
-const createCartItem = (item) => {  // item заказ
+const createCartItem = (itemOrder) => {  // item заказ
      
      const li = document.createElement('li');
      li.classList.add('order__item');
      li.innerHTML = `
-            <img class="order__img" src="img/6.jpg" alt="${item.title}">
+            <img class="order__img" src="img/6.jpg" alt="${itemOrder.title}">
             <div class="order__info">
-                  <h3 class="order__name"> ${item.title} </h3>
+                  <h3 class="order__name"> ${itemOrder.title} </h3>
                   <ul class="order__topping-list">
-                        <li class="order__topping-item"> ${item.size}  </li>
-                        <li class="order__topping-item"> ${item.cup ? item.cup : ""} </li>            <!-- если item.cup есть, то отобразим иначе пусто -->
-                        ${item.topping ?
-                                (Array.isArray(item.topping) ? item.topping.map((toppingItem) => `<li class="order__topping-item">${toppingItem}</li>`)  
-                                :  `<li class="order__topping-item"> ${item.topping} </li>`)
-                                :   ""  }
+                        <li class="order__topping-item"> ${itemOrder.size}  </li>
+                        <li class="order__topping-item"> ${itemOrder.cup ? itemOrder.cup : ""} </li>            <!-- если itemOrder.cup есть, то отобразим иначе пусто -->
+                        ${ itemOrder.topping ?  Array.isArray(itemOrder.topping) ? itemOrder.topping.map((toppingItem) => `<li class="order__topping-item"> ${toppingItem} </li>`, )  :  `<li class="order__topping-item"> ${itemOrder.topping} </li>`  :  "" }
                   </ul>
             </div>
 
-            <button class="order__item-delete" aria-label="Удалить заказ из корзины" data-id="${item.id}"></button>    <!-- data-id добавили  чтобы удалять заказ по его id -->
-            <p class="order__item-price"> ${item.price}&nbsp;Р </p>
+            <button class="order__item-delete" aria-label="Удалить заказ из корзины" data-id="${itemOrder.id}"></button>    <!-- data-id добавили  чтобы удалять заказ по его id -->
+            <p class="order__item-price"> ${itemOrder.price}&nbsp;Р </p>
      `;
 
      return li; 
@@ -399,8 +398,32 @@ const renderCart  = () => {
             orderList.append(createCartItem(item));
       });
 
-
       orderTotalPrice.textContent = `${orderListData.reduce((acc, item)=> +item.price + acc, 0)} Р`;  // суммирует по полю item.price
+
+      orderForm.addEventListener('submit', async(evt) => {  // отправляем корзину на сервер
+            evt.preventDefault();
+            if(!orderListData.length){          // если массив заказво  пусой
+                  orderForm.reset(); 
+                  modalOrder.closeModal("close");                              // по наатию на Закзать, модалка закроется
+            }
+
+            const data = getFormData(orderForm);                                          //  чтобы получить объект заказа(ЕГО БУДЕМ ОТПРАВЛЯТЬ НА СЕРВЕР) с выбранными полями(Имя и Телефон) формы orderForm {name, phone, [{},{},{}]}
+            const response = await fetch(`${API_URL}api/order`, {                         //  отправляем POST запросом данные({data, products}) формы на сервер
+                  method: 'POST',
+                  body: JSON.stringify({                                                  // даннеы отправляем ввдже json, поэтому  JSON.stringify
+                        ...data,
+                        products: orderListData, 
+                        headers: {
+                              "Content-Type": 'application/json' 
+                        },
+                  }),     
+           });
+
+           const { message } = await response.json();                                     // json() это асинхронный метод, поэтому await
+
+           cartDataControl.clear();                                                       //  очищаем localstorage
+           
+      })
 };
 
 
