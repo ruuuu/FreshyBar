@@ -87,8 +87,15 @@ fieldset{
       border: 0;
 }
 
+
 h1, h2, h3, p, fieldset{
       margin: 0;
+}
+
+
+.visually-hidden{ /* скрываем дсотупно для роботов-поисковиков и программ-читалок */
+      position: fixed;
+      transform: scale(0);
 }
 
 
@@ -107,10 +114,30 @@ h1, h2, h3, p, fieldset{
       background-color:  #F44;
       box-shadow: 0px 4px 20px 0px #FA5A5A;
       color: rgba(255, 255, 255, 1);
+      transition: background-color .2s ease-in-out, box-shadow .2s ease-in-out;  /* background-color и box-shadow   меняется плавно */
+      outline: none;
+      border: 1px solid transparent;
 }
 
 
-.btn:disabled{  /* неактвиняа кнпока / */
+.btn:hover:not(:disabled){  /* не для задизебйленной кнопки */ 
+      background-color:  #FF6767;
+      box-shadow: 0px 4px 20px 0px #FA5A5A;
+}
+
+
+.btn:active:not(:disabled){ 
+      background-color: #52E36A;
+      box-shadow: 0px 4px 20px 0px #52E36A;
+}
+
+
+.btn:focus:not(:disabled){
+      border-color:  #D5B4A8;
+}
+
+
+.btn:disabled{  /* неактвиняа кнпока  */
       box-shadow: none;
       background-color: #c1c1c1;
 }
@@ -220,7 +247,6 @@ h1, h2, h3, p, fieldset{
       left: 0;
       right: 0;
       bottom: 0;
-
 }
 
 
@@ -232,43 +258,47 @@ h1, h2, h3, p, fieldset{
 }
 
 
-.decor__img--01{
+.decor__img--01{ /* клубиника  слева*/
       width: 223px;
       height: 214px;
       filter: drop-shadow(0px 10px 30px  rgba(164, 7, 2, 0.50));
       background-image: url('../img/berry1.png');
       top: 19%;
       left: -6%;
+      animation: flying01 2s ease-in-out;  /* flying01 название анимации, сами задали */
 }
 
 
-.decor__img--02{
+.decor__img--02{ /* ежевика */
       width: 180px;
       height: 147px;
       filter: drop-shadow(0px 4px 20px  rgba(17, 7, 108, 0.50));
       background-image: url('../img/berry2.png');
       right: 6%;
       top: 10%;
+      animation: flying02 2s ease-in-out;
 }
 
 
-.decor__img--03{
+.decor__img--03{ /* желтая ягода на желтом фоне */
       width: 46px;
       height: 41px;
       filter: drop-shadow(0px 4px 20px  rgba(223, 97, 15, 0.40));
       background-image: url('../img/berry3.png');
       bottom: 46%;
       left: 36%;
+      animation: flying03 2s ease-in-out;
 }
 
 
-.decor__img--04{
+.decor__img--04{ /* клубника справа */
       width: 109px;
       height: 114px;
       filter: drop-shadow(0px 10px 30px  rgba(164, 7, 2, 0.50));
       background-image: url('../img/berry4.png');
-      top: 34%;
+      bottom: -4%;
       right: 1%;
+      animation: flying04 2s ease-in-out;
 }
 
 
@@ -278,17 +308,19 @@ h1, h2, h3, p, fieldset{
       filter: drop-shadow(0px 4px 20px  rgba(1, 30, 82, 0.50));
       background-image: url('../img/berry5.png');
       bottom: -5%;
-      left: 10%;
+      left: 25%;
+      animation: flying05 2s ease-in-out;
 }
 
 
-.decor__img--06{
+.decor__img--06{ /* желтая ягода на розовом фоне */
       width: 46px;
       height: 41px;
       filter: drop-shadow(0px 4px 20px  rgba(223, 97, 15, 0.40));
       background-image: url('../img/berry6.png');
-      bottom: -43%;
-      left: 27%;
+      top: 35%;
+      right: -5%;
+      animation: flying06 2s ease-in-out;
 }
 
 /*goods*/
@@ -828,18 +860,85 @@ h1, h2, h3, p, fieldset{
 }
 
 
+
+.radio { /* label */
+      position: relative;
+      display: block;
+      padding-left: 32px;
+      line-height: 24px; /* тк размер радиокнопки 24px */
+}
+
+
+.radio__input { /* input */
+      position: absolute;
+      -moz-appearance: none;  /* для ff */
+      -webkit-appearance: none;  /* для сафари */
+      appearance: none; /* скрыли */
+
+      width: 24px;
+      height: 24px;
+      margin-left: -32px;  
+}
+
+
+.radio__input::before{ /* радиокнпока */
+      content: "";
+      position: absolute;
+      top: 0;  
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: block;
+      border-radius: 50%;
+      background-color: #FFF;
+
+} 
+
+
+.radio__input::after{ /* черный кружочек в радиокнопке */
+      content: "";
+      position: absolute;
+      top: 50%; /* центруем */
+      left: 50%; /* центруем */
+      transform: translate(-50%, -50%);  /* для центрровки юзаем top, left и transform */
+      width: 8px; /* рамзеры черного круглежка */
+      height: 8px;
+      border-radius: 50%;
+      background-color: #000;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0;  /* чтоб круглешрк не отображаалсь */
+      transition: opacity 0.3s ease-in-out;  /* плавно появляется */
+} 
+   
+
+.radio__input:checked::after{  /* нажатая радиокнопка */
+      opacity: 1;       /* черный круглешок отображается */
+}
+
+
+.radio__input:hover::before{  
+     background-color: #F6F6F6;
+}
+
+
+.radio__input:focus::before{
+      border: 1px solid #D5B4A8;
+}
+
+
+.radio__input:focus-visible{
+      outline: none;
+}
+
+
+
 .make__upsale{
       font-size: 12px;
       color: #D5B4A8;
 }
 
 
-.radio {
-}
-
-
-.radio__input {
-      }
 
 
 /* laptop */
@@ -873,6 +972,62 @@ h1, h2, h3, p, fieldset{
       .goods__list{
             grid-template-columns: repeat(3, 280px);
       }   
+
+
+      .decor__img--01{ /* клубиника  слева*/
+            width: 131px;
+            height: 125px;
+            top: 19%;
+            left: -1%;
+            animation: flyingLaptop01 2s ease-in-out;
+      }
+      
+      
+      .decor__img--02{ /* ежевика */
+            width: 122px;
+            height: 99px;
+            right: 8%;
+            top: 10%;
+            animation: flyingLaptop02 2s ease-in-out;
+      }
+      
+      
+      .decor__img--03{ /* желтая ягода на желтом фоне */
+            width: 34px;
+            height: 30px;
+            bottom: 46%;
+            left: 36%;
+            animation: flyingLaptop03 2s ease-in-out;
+      }
+      
+      
+      .decor__img--04{ /* клубника справа */
+            width: 129px;
+            height: 124px;
+            bottom: -4%;
+            right: 1%;
+            animation: flyingLaptop04 2s ease-in-out;
+      }
+      
+      
+      .decor__img--05{   /* черника */
+            width: 61px;
+            height: 64px;
+            bottom: -5%;
+            left: 25%;
+            animation: flyingLaptop05 2s ease-in-out;
+      }
+      
+      
+      .decor__img--06{ /* желтая ягода на розовом фоне */
+            width: 38px;
+            height: 33px;
+            top: 35%;
+            right: 4%;
+            animation: flyingLaptop06 2s ease-in-out;
+      }
+      
+      
 }
 
 
@@ -887,7 +1042,6 @@ h1, h2, h3, p, fieldset{
             --width: 608px; 
             --padding: 15px;
       }
-
 
       .header{
             padding-top: 34px;
@@ -917,7 +1071,6 @@ h1, h2, h3, p, fieldset{
             gap: 13px;  
       }
 
-
       .hero__cup{
             border-radius: 12px;
       }
@@ -925,7 +1078,6 @@ h1, h2, h3, p, fieldset{
       .hero__cup--yellow {
             margin-top: -50px;
       }
-
 
       .hero__img {
             bottom: 12%; /* 25px(padding-bottom ) / 194px(ширина квадрата) */
@@ -1006,6 +1158,55 @@ h1, h2, h3, p, fieldset{
       .footer__container{
             gap: 24px;
       }
+
+           
+      .decor__img--01{ /* клубиника  слева*/
+            width: 76px;
+            height: 73px;
+            top: 19%;
+            left: -1%;
+      }
+      
+      
+      .decor__img--02{ /* ежевика */
+            width: 72px;
+            height: 58px;
+            right: 8%;
+            top: 10%;
+      }
+      
+      
+      .decor__img--03{ /* желтая ягода на желтом фоне */
+            width: 25px;
+            height: 23px;
+            bottom: 46%;
+            left: 36%;
+      }
+      
+      
+      .decor__img--04{ /* клубника справа */
+            width: 96px;
+            height: 93px;           
+            bottom: -4%;
+            right: 1%;
+      }
+      
+      
+      .decor__img--05{   /* черника */
+            width: 41px;
+            height: 44px;
+            bottom: -5%;
+            left: 25%;
+      }
+      
+      
+      .decor__img--06{ /* желтая ягода на розовом фоне */
+            width: 22px;
+            height: 19px;
+            top: 35%;
+            right: 4%;
+      }
+      
 }
 
 
@@ -1013,7 +1214,7 @@ h1, h2, h3, p, fieldset{
 @media (max-width: 640px){
 
       body{
-            background-image: url('../img/bg-mobile.svg');
+            /* background-image: url('../img/bg-mobile.svg'); */
 
       }
 
@@ -1040,7 +1241,6 @@ h1, h2, h3, p, fieldset{
       }
 
       .hero__title{
-           
             font-size: 36px;
       }
 
@@ -1069,8 +1269,220 @@ h1, h2, h3, p, fieldset{
      }
 
      .footer__developer{
-            justify-self: flex-start;
+            justify-self: flex-start; /*грид элемент, выравнивание элеменат по горизонтали*/
             display: block;
             gap: 6px;    
      }
+
+
+     .decor__img--01{ /* клубиника  слева*/
+            width: 76px;
+            height: 73px;
+            top: 19%;
+            left: -1%;
+      }
+
+
+      .decor__img--02{ /* ежевика */
+            width: 62px;
+            height: 50px;
+            right: 8%;
+            top: 120%;
+      }
+
+
+      .decor__img--03{ /* желтая ягода на желтом фоне */
+            width: 25px;
+            height: 23px;
+            bottom: -116%;
+            left: 36%;
+      }
+
+
+      .decor__img--04{ /* клубника справа */
+           display: none;
+      }
+
+
+      .decor__img--05{   /* черника */
+           display: none;
+      }
+
+
+      .decor__img--06{ /* желтая ягода на розовом фоне */
+            width: 25px;
+            height: 23px;
+            top: 35%;
+            right: 4%;
+      }
+
 }
+
+
+@media (max-width: 500px){
+
+      body{
+            background-image: url('../img/bg-mobile.svg');
+
+      }
+
+}
+
+
+/* анимируем элементы: при помощи keyframes */
+@keyframes flying01{  /* flying01 сам задали такое название анимации */
+      0%{  /* между 0% и 100% можно укзаать любой % */
+            top: 50%;
+            left: -100%;
+      }
+
+      100%{
+            top: 19%;
+            left: -6%;
+      }
+} 
+
+
+@keyframes flying02{  
+      0%{ 
+            top: 50%;
+            left: -100%;
+      }
+
+      100%{
+            right: 6%;
+            top: 10%;  
+      }
+} 
+
+
+@keyframes flying03{ 
+      0%{ 
+            top: 50%;
+            left: -100%;
+      }
+
+      100%{
+            bottom: 46%;
+            left: 36%;
+      }
+} 
+
+
+@keyframes flying04{  
+      0%{  
+            top: 50%;
+            left: -100%;
+      }
+
+      100%{
+            bottom: -4%;
+            right: 1%; 
+      }
+} 
+
+
+@keyframes flying05{ 
+      0%{  
+            top: 50%;
+            left: -100%;
+      }
+
+      100%{
+            bottom: -5%;
+            left: 25%;  
+      }
+} 
+
+
+@keyframes flying06{  
+      0%{  
+            top: 50%;
+            left: -100%;
+      }
+
+      100%{
+            top: 35%;
+            right: -5%;
+      }
+} 
+
+
+
+/* для laptop: */
+@keyframes flyingLaptop01{  /* flying01 сам задали такое название анимации */
+      0%{  /* между 0% и 100% можно укзаать любой % */
+            top: -100%;
+            bottom: -100%;
+      }
+
+      100%{
+            right: 19%;
+            left: -6%;
+      }
+} 
+
+
+@keyframes flyingLaptop02{  
+      0%{ 
+            top: -100%;
+            bottom: -100%;
+      }
+
+      100%{
+            right: 6%;
+            top: 10%;  
+      }
+} 
+
+
+@keyframes flyingLaptop03{ 
+      0%{ 
+            top: -100%;
+            bottom: -100%;
+      }
+
+      100%{
+            bottom: 46%;
+            left: 36%;
+      }
+} 
+
+
+@keyframes flyingLaptop04{  
+      0%{  
+            top: -100%;
+            bottom: -100%;
+      }
+
+      100%{
+            bottom: -4%;
+            right: 1%; 
+      }
+} 
+
+
+@keyframes flyingLaptop05{ 
+      0%{  
+            top: -100%;
+            bottom: -100%;
+      }
+
+      100%{
+            bottom: -5%;
+            left: 25%;  
+      }
+} 
+
+
+@keyframes flyingLaptop06{  
+      0%{  
+            top: -100%;
+            bottom: -100%;
+      }
+
+      100%{
+            top: 35%;
+            right: -5%;
+      }
+} 

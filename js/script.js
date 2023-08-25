@@ -345,7 +345,7 @@ const calculateAdd = () => {
             makeTitle.textContent = '';
             makeTotalPrice.textContent = '';
             makeTotalSize.textContent = '';
-            btnAdd.disabled = true;         // дизебйлим кнопку
+            //btnAdd.disabled = true;         // дизебйлим кнопку
             formAdd.reset();                    // очищем форму
       };
 
@@ -355,13 +355,15 @@ const calculateAdd = () => {
 
 
 
-// отрисовка заказа в корзине:
+// отрисовка заказа в Корзине:
 const createCartItem = (itemOrder) => {  // item заказ
-     
+     console.log('itemOrder ', itemOrder)
+
      const li = document.createElement('li');
      li.classList.add('order__item');
+     // img/6.jpg
      li.innerHTML = `
-            <img class="order__img" src="img/6.jpg" alt="${itemOrder.title}">
+            <img class="order__img" src="${API_URL}${itemOrder.image}" alt="${itemOrder.title}">
             <div class="order__info">
                   <h3 class="order__name"> ${itemOrder.title} </h3>
                   <ul class="order__topping-list">
@@ -393,7 +395,7 @@ const renderCart  = () => {
       orderList.textContent = '';                                // перед заполнением контенйер очищаем
       orderCount.textContent = `(${orderListData.length})`;
 
-      orderListData.forEach((item) => {  // item заказ { cup: "Биоразлагаемый", id:  "55fc7c", ingredients:  ["Киви", "Банан"],  price: "290",  title: "Конструктор: Киви, Банан",  topping: "Лед" }
+      orderListData.forEach((item) => {  // item заказ { cup: "Биоразлагаемый", id: "55fc7c",  ingredients: ["Киви", "Банан"],  price: "290",  title: "Конструктор: Киви, Банан",  topping: "Лед" }
             
             orderList.append(createCartItem(item));
       });
