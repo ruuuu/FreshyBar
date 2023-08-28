@@ -28,9 +28,15 @@
 }
 
 
+:root{
+      --main: #F8E8E2;
+      --text: #000;
+}
+
+
 html{
       box-sizing: border-box;
-      scroll-behavior: smooth; /* скролл плавный */ 
+      scroll-behavior: smooth; /* скролл плавный */
 }
 
 
@@ -46,8 +52,8 @@ body{
       font-size: 18px;
       font-weight: 400;
       line-height: 1.1;  /* в % не указывам, иначе будет проецент от размера шрифта */
-      color: #000;
-      background-color: #F8E8E2;
+      color: var(--text);
+      background-color: var(--main);
       background-image: url("/img/bg.svg");
       background-repeat: no-repeat;
       background-position: top;
@@ -78,6 +84,7 @@ ul{
 
 img{
       max-width: 100%;
+      max-height: 100%;
       height: auto;
 }
 
@@ -217,8 +224,8 @@ h1, h2, h3, p, fieldset{
 .hero__img {
       position: absolute;
       bottom: 13%; /* 50px(padding-bottom ) / 380px(ширина квадрата) */
-      left: 50%;
-      transform: translateX(-50%); /*  translateX сдвигает по горизонлаи, в нашем случае влево.  */
+      left: 50%;  /*относительно родителя */
+      transform: translateX(-50%); /* отноистельно самого элемента,  translateX сдвигает по горизонлаи, в нашем случае влево.  */
       width: 55%;  /* 210px(ширина стакана) / 380px(ширина квадрата) */
 }
 
@@ -904,7 +911,7 @@ h1, h2, h3, p, fieldset{
       width: 8px; /* рамзеры черного круглежка */
       height: 8px;
       border-radius: 50%;
-      background-color: #000;
+      background-color: var(--text);
       background-repeat: no-repeat;
       background-position: center;
       opacity: 0;  /* чтоб круглешрк не отображаалсь */
@@ -1096,7 +1103,7 @@ h1, h2, h3, p, fieldset{
       }
 
       .goods__list{
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));   /* repeat(4, 140px); */
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));   /* repeat(4, 140px); */ /* на разынх разрешениях, кол-во колонок и их ширина будет меняться */
             gap: 16px;
       }   
 
@@ -1264,18 +1271,18 @@ h1, h2, h3, p, fieldset{
             gap: 20px;                     
       }
 
-     .footer__logo{
+      .footer__logo{
             width: 120px;
-     }
+      }
 
-     .footer__developer{
+      .footer__developer{
             justify-self: flex-start; /*грид элемент, выравнивание элеменат по горизонтали*/
             display: block;
             gap: 6px;    
-     }
+      }
 
 
-     .decor__img--01{ /* клубиника  слева*/
+      .decor__img--01{ /* клубиника  слева*/
             width: 76px;
             height: 73px;
             top: 19%;
@@ -1325,11 +1332,10 @@ h1, h2, h3, p, fieldset{
             background-image: url('../img/bg-mobile.svg');
 
       }
-
 }
 
 
-/* анимируем элементы: при помощи keyframes */
+/* анимируем элементы(ягодки): при помощи keyframes */
 @keyframes flying01{  /* flying01 сам задали такое название анимации */
       0%{  /* между 0% и 100% можно укзаать любой % */
             top: 50%;

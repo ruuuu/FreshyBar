@@ -62,7 +62,7 @@ const createCard = (cocktailItem) => {
       cocktail.classList.add('goods__card', 'cocktail');          // добавили два класса
 
       cocktail.innerHTML = `
-            <img class="cocktail__img" src="${API_URL}${cocktailItem.image}" alt="${cocktailItem.title}">
+            <img class="cocktail__img" src="${API_URL}${cocktailItem.image}" width="256" height="304" alt="${cocktailItem.title}">
             <div class="cocktail__content">
                   <div class="cocktail__text">
                         <h3 class="cocktail__title">${cocktailItem.title}</h3>
